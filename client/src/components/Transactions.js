@@ -4,14 +4,15 @@ import CoinMenu from "./CoinMenu";
 
 const Transactions = props => {
   // debugger;
-  console.log(props.cryptos[props.value])
-  let obj = props.cryptos[props.value];
+  
+  // Builds the URL to display the coin icon on the page
+  let coinSymbol = props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].symbol.toLowerCase()
+  let iconURL = "https://unpkg.com/@icon/cryptocurrency-icons/icons/" + coinSymbol + ".svg"
 
-  console.log(obj)
-  return(
+
+  return (
     <div className="transactions">
 
-      {'test'}
       {/* {JSON.stringify(props.cryptos[52])} */}
       {props.cryptos.length > 0 ? props.cryptos[0].symbol : null}
 
@@ -45,24 +46,22 @@ const Transactions = props => {
         <div className="col-6">
           <div className="form-group">
             <label >Currencies:</label>
-            <CoinMenu 
-            
-            // Passing these in here too because for some reason I can't access the props properties without
-            // them being undefined otherwise.  Probably an async issue.
-            value={props.value}
-            onCryptoChange={props.onCryptoChange}
+            <CoinMenu
+
+              value={props.value}
+              onCryptoChange={props.onCryptoChange}
             />
           </div>
         </div>
 
-        {/* TODO: Display coin API information here */}
 
-        { console.log(props)}
-        { console.log(props.symbol) }
+        {/* {console.log(props)}
+        {console.log(props.symbol)} */}
 
-        <div id="coinIcon">{props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].symbol}</div>
+
+        <div id="coinIcon"><img height="32" width="32" src={iconURL} /></div>
         <div id="coinName">{props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].name}</div>
-        <div id="coinPrice"></div>
+        <div id="coinPrice">${props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].quotes.USD.price}</div>
 
         <div className="form-group">
           <label className="col-2 col-form-label">Amount to trade:</label>
