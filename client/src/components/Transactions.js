@@ -4,7 +4,7 @@ import CoinMenu from "./CoinMenu";
 
 const Transactions = props => {
   // debugger;
-  
+  console.log(props)
   // Builds the URL to display the coin icon on the page
   let coinSymbol = props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].symbol.toLowerCase()
   let iconURL = "https://unpkg.com/@icon/cryptocurrency-icons/icons/" + coinSymbol + ".svg"
@@ -13,8 +13,10 @@ const Transactions = props => {
   return (
     <div className="transactions">
 
-      {/* {JSON.stringify(props.cryptos[52])} */}
-      {props.cryptos.length > 0 ? props.cryptos[0].symbol : null}
+      {/* Tests that we can grab user data from the database */}
+      {JSON.stringify(props.users[0])}
+      <br />
+      {props.users && props.users[0] && props.users[0].wallet}
 
       <div className="container">
         {/* {{!-- Sign in as a select userID --}} */}

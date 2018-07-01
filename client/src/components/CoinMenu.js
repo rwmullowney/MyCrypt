@@ -3,9 +3,6 @@ import React, { Component } from 'react';
 class CoinMenu extends Component {
 
     render() {
-  
-      console.log("this props props")
-      console.log(this.props)
       return (
         <div>
           {/* {JSON.stringify(this.props.props.cryptos[1])} */}
