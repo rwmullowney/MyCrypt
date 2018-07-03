@@ -4,19 +4,23 @@ import CoinMenu from "./CoinMenu";
 
 const Transactions = props => {
   // debugger;
-  console.log(props)
+  console.log(props.cryptos)
   // Builds the URL to display the coin icon on the page
   let coinSymbol = props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].symbol.toLowerCase()
   let iconURL = "https://unpkg.com/@icon/cryptocurrency-icons/icons/" + coinSymbol + ".svg"
+  let coinName = props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].name
+  let coinPrice = props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].quotes.USD.price
 
 
   return (
     <div className="transactions">
 
       {/* Tests that we can grab user data from the database */}
-      {JSON.stringify(props.users[0])}
+      {/* {JSON.stringify(props.users[0])} */}
       <br />
-      {props.users && props.users[0] && props.users[0].wallet}
+      {/* https://stackoverflow.com/questions/17159295/accessing-object-with-key-as-number-php */}
+      {props.users[0].wallet}
+      {/* {console.log(props.cryptos[props.value])} */}
 
       <div className="container">
         {/* {{!-- Sign in as a select userID --}} */}
@@ -62,8 +66,8 @@ const Transactions = props => {
 
 
         <div id="coinIcon"><img height="32" width="32" src={iconURL} /></div>
-        <div id="coinName">{props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].name}</div>
-        <div id="coinPrice">${props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].quotes.USD.price}</div>
+        <div id="coinName">{coinName}</div>
+        <div id="coinPrice">${coinPrice}</div>
 
         <div className="form-group">
           <label className="col-2 col-form-label">Amount to trade:</label>
