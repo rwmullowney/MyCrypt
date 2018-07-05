@@ -7,7 +7,7 @@ class CoinMenu extends Component {
         <div>
           {/* {JSON.stringify(this.props.props.cryptos[1])} */}
           <select
-            value={this.props.value} 
+            value={this.props.cryptoValue} 
             onChange={this.props.onCryptoChange} 
             className="form-control" id="coinDropdown">
             <option value="1">Bitcoin</option>

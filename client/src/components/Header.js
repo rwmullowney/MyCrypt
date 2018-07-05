@@ -7,22 +7,29 @@ var textStyle = {
   fontFamily: "Georgia"
 };
 
-var testarray = {data:[1, 2, 3, 4, 5]}
+let testWallet = {
+  cash: 10000,
+  BTC: 2503,
+  ETH: 185
+}
 
 export default class Header extends Component {
 
   // Set initial state
   state = {
     cryptos: [],
-    value: 52,
+    cryptoValue: 52,
+    userEmail: 'Enter your email',
     users: []
   };
+
 
   // Runs the API query upon page load
   componentDidMount() {
     this.cryptoAPI();
     this.loadUsers();
   };
+
 
   // Grab the user list from the database
   loadUsers = () => {
@@ -31,24 +38,43 @@ export default class Header extends Component {
       .catch(err => console.log(err));
   };
 
+
   // Runs the CoinMarketCap API and updates the state with the response
   cryptoAPI() {
     API.search()
       .then(
-        res => { 
+        res => {
           // Puts initial response (object of objects) into an array so we can check it's length for rendering (similar to users)
-          this.setState({ cryptos: [res.data.data] }) 
+          this.setState({ cryptos: [res.data.data] })
         }
       )
       .catch(err => console.log(err));
   };
 
+
   // Update the crypto on the page
   onCryptoChange = e => {
     console.log("updating with " + e.target.value)
-    this.setState({ value: e.target.value })
+    this.setState({ cryptoValue: e.target.value })
     // console.log(this.state.cryptos[this.state.value])
   }
+
+
+  onEmailChange = e => {
+    this.setState({ userEmail: e.target.value })
+  }
+
+
+  createUser = e => {
+    e.preventDefault();
+    API.createUser({
+      userName: "test user",
+      userEmail: this.state.userEmail,
+      wallet: JSON.stringify(testWallet)
+    })
+    console.log("this button works")
+  }
+
 
   renderTransactions() {
 
@@ -61,8 +87,11 @@ export default class Header extends Component {
       console.log(this.state.cryptos)
       return (<Transactions
         cryptos={this.state.cryptos[0]}
-        value={this.state.value}
+        cryptoValue={this.state.cryptoValue}
         onCryptoChange={this.onCryptoChange}
+        userEmail={this.state.userEmail}
+        onEmailChange={this.onEmailChange}
+        createUser={this.createUser}
         users={this.state.users}
       />)
     }

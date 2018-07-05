@@ -4,16 +4,19 @@ import CoinMenu from "./CoinMenu";
 
 const Transactions = props => {
   // debugger;
-  console.log(props.cryptos)
+  // console.log(props.cryptos)
+
+  // Defining coin-related variables
   // Builds the URL to display the coin icon on the page
-  let coinSymbol = props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].symbol.toLowerCase()
+  let coinSymbol = props.cryptos && props.cryptos[props.cryptoValue] && props.cryptos[props.cryptoValue].symbol.toLowerCase()
   let iconURL = "https://unpkg.com/@icon/cryptocurrency-icons/icons/" + coinSymbol + ".svg"
-  let coinName = props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].name
-  let coinPrice = props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].quotes.USD.price
+  let coinName = props.cryptos && props.cryptos[props.cryptoValue] && props.cryptos[props.cryptoValue].name
+  let coinPrice = props.cryptos && props.cryptos[props.cryptoValue] && props.cryptos[props.cryptoValue].quotes.USD.price
 
 
   return (
     <div className="transactions">
+    {console.log(props)}
 
       {/* Tests that we can grab user data from the database */}
       {/* {JSON.stringify(props.users[0])} */}
@@ -38,10 +41,17 @@ const Transactions = props => {
         <div className="form-group">
           <label className="col-2 col-form-label">User Email</label>
           <div className="col-10">
-            <input className="form-control" type="email" value="bootstrap@example.com" id="userEmail" />
+            <input
+              id="userEmail"
+              type="email"
+              label="Email address"
+              placeholder="Enter email"
+              value={props.userEmail}
+              onChange={props.onEmailChange}
+            />
           </div>
         </div>
-        <button className="btn btn-success" id="submitEmail">Create user</button>
+        <button className="btn btn-success" id="submitEmail" onClick={props.createUser}>Create user</button>
 
 
 
@@ -54,7 +64,7 @@ const Transactions = props => {
             <label >Currencies:</label>
             <CoinMenu
 
-              value={props.value}
+              cryptoValue={props.cryptoValue}
               onCryptoChange={props.onCryptoChange}
             />
           </div>
