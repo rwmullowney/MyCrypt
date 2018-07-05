@@ -11,6 +11,10 @@ export default {
     getUsers: function(){
         return axios.get("/api/users")
     },
+    // Sign in as a specific user
+    userLogin: function(userLogin){
+        return axios.get("api/users/" + userLogin)
+    },
     // Saves a new user to the database
     createUser: function(userData){
         return axios.post("api/users", userData)

@@ -20,7 +20,9 @@ export default class Header extends Component {
     cryptos: [],
     cryptoValue: 52,
     userEmail: 'Enter your email',
-    users: []
+    userAccount: "Sign in here",
+    users: [],
+    signedIn: {},
   };
 
 
@@ -34,7 +36,11 @@ export default class Header extends Component {
   // Grab the user list from the database
   loadUsers = () => {
     API.getUsers()
-      .then(res => this.setState({ users: res.data }))
+      .then(res => {
+        console.log(res.data)
+        this.setState({ users: res.data })
+      })
+
       .catch(err => console.log(err));
   };
 
@@ -60,6 +66,7 @@ export default class Header extends Component {
   }
 
 
+  // Updates state when the email the user enters to create an account is changed
   onEmailChange = e => {
     this.setState({ userEmail: e.target.value })
   }
@@ -72,7 +79,30 @@ export default class Header extends Component {
       userEmail: this.state.userEmail,
       wallet: JSON.stringify(testWallet)
     })
-    console.log("this button works")
+      .then(res => this.loadUsers)
+      .catch(err => console.log(err));
+  }
+
+  // Updates state when the email the user enters to sign in is changed
+  onAccountChange = e => {
+    this.setState({ userAccount: e.target.value })
+  }
+
+  userLogin = e => {
+    e.preventDefault();
+    API.userLogin(this.state.userAccount)
+      .then(res => {
+        console.log("signed in")
+        console.log(res.data)
+        this.setState({
+          signedIn: {
+            userSignedIn: res.data.userName,
+            email: res.data.userEmail,
+            userWallet: res.data.wallet
+          }
+        })
+      })
+      .catch(err => console.log(err))
   }
 
 
@@ -84,14 +114,20 @@ export default class Header extends Component {
     // from the empty array.  So now, this makes it so that we won't even run that initial empty-array Transactions rendering 
     // because the if statement here ensures that it won't render unless there's an item in the array
     if (this.state.users.length && this.state.cryptos) {
-      console.log(this.state.cryptos)
       return (<Transactions
         cryptos={this.state.cryptos[0]}
         cryptoValue={this.state.cryptoValue}
         onCryptoChange={this.onCryptoChange}
+
         userEmail={this.state.userEmail}
         onEmailChange={this.onEmailChange}
         createUser={this.createUser}
+
+        userAccount={this.state.userAccount}
+        onAccountChange={this.onAccountChange}
+        userLogin={this.userLogin}
+        signedIn={this.state.signedIn}
+
         users={this.state.users}
       />)
     }

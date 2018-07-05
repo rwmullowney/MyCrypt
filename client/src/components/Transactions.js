@@ -16,25 +16,38 @@ const Transactions = props => {
 
   return (
     <div className="transactions">
-    {console.log(props)}
 
+      {/* {console.log(props)} */}
       {/* Tests that we can grab user data from the database */}
-      {/* {JSON.stringify(props.users[0])} */}
       <br />
       {/* https://stackoverflow.com/questions/17159295/accessing-object-with-key-as-number-php */}
       {props.users[0].wallet}
       {/* {console.log(props.cryptos[props.value])} */}
 
       <div className="container">
-        {/* {{!-- Sign in as a select userID --}} */}
+        {/* {{!-- Sign in as a select user email --}} */}
         <div className="form-group">
           <label className="col-2 col-form-label">User ID Login</label>
           <div className="col-10">
-            <input className="form-control" type="email" value="1" id="loginID" />
+          <input
+              id="userAccount"
+              type="email"
+              label="Email address"
+              placeholder="Enter email"
+              value={props.userAccount}
+              onChange={props.onAccountChange}
+            />
           </div>
         </div>
         <div id="showLogin"></div>
-        <button className="btn btn-success" id="userLogin">Login</button>
+        <button className="btn btn-success" id="userLogin" onClick={props.userLogin}>Login</button>
+
+
+
+        <h6>Signed in as:</h6>
+        <p>{props.signedIn.userSignedIn}</p>
+        <p>{props.signedIn.email}</p>
+        <p>{props.signedIn.userWallet}</p>
 
 
         {/* Create a new user */}

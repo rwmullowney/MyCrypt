@@ -3,7 +3,6 @@ const db = require("../models");
 // Defining methods for the usersController
 module.exports = {
   findAll: function (req, res) {
-    
 
     db.User
       .find({})
@@ -11,17 +10,22 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  // findById: function(req, res) {
-  //   db.Book
-  //     .findById(req.params.id)
-  //     .then(dbModel => res.json(dbModel))
-  //     .catch(err => res.status(422).json(err));
-  // },
+  userLogin: function(req, res) {
+    db.User
+      .findOne(
+        {userEmail: req.params.userLogin})
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
   createUser: function (req, res) {
+
     db.User
       .create(req.body)
       .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+      .catch(err => 
+        console.log(err)  
+        // res.status(422).json(err)
+      );
   }
   // update: function(req, res) {
   //   db.Book
