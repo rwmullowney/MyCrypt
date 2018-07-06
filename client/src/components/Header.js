@@ -7,10 +7,9 @@ var textStyle = {
   fontFamily: "Georgia"
 };
 
+// Dummy wallet for populating newly created users with currency
 let testWallet = {
-  cash: 10000,
-  BTC: 2503,
-  ETH: 185
+  cash: 10000
 }
 
 export default class Header extends Component {
@@ -29,24 +28,42 @@ export default class Header extends Component {
   };
 
 
-  // Runs the API query upon page load
+  // Runs the API queries upon page load
   componentDidMount() {
     this.cryptoAPI();
     this.loadUsers();
   };
 
 
-  // Grab the user list from the database
-  loadUsers = () => {
-    API.getUsers()
-      .then(res => {
-        console.log(res.data)
-        this.setState({ users: res.data })
-      })
+  // ==============================================
+  // onChange Functions
+  // ==============================================
 
-      .catch(err => console.log(err));
-  };
+  // Update the crypto on the page
+  onCryptoChange = e => {
+    console.log("updating with " + e.target.value)
+    this.setState({ cryptoValue: e.target.value })
+  }
 
+  // Updates state when the email the user enters to create an account is changed
+  onEmailChange = e => {
+    this.setState({ createEmail: e.target.value })
+  }
+
+  // Updates state when the email the user enters to sign in is changed
+  onLoginChange = e => {
+    this.setState({ loginEmail: e.target.value })
+  }
+
+  // Updates state when user changes purchase amount
+  onTransactionChange = e => {
+    this.setState({ transactionAmount: e.target.value })
+  }
+
+
+  // ==============================================
+  // API/DB Functions
+  // ==============================================
 
   // Runs the CoinMarketCap API and updates the state with the response
   cryptoAPI() {
@@ -60,19 +77,18 @@ export default class Header extends Component {
       .catch(err => console.log(err));
   };
 
-  // Update the crypto on the page
-  onCryptoChange = e => {
-    console.log("updating with " + e.target.value)
-    this.setState({ cryptoValue: e.target.value })
-    // console.log(this.state.cryptos[this.state.value])
-  }
+  // Grab the user list from the database
+  loadUsers = () => {
+    API.getUsers()
+      .then(res => {
+        console.log(res.data)
+        this.setState({ users: res.data })
+      })
 
+      .catch(err => console.log(err));
+  };
 
-  // Updates state when the email the user enters to create an account is changed
-  onEmailChange = e => {
-    this.setState({ createEmail: e.target.value })
-  }
-
+  // Sends user email to the DB to create a basic account
   createUser = e => {
     e.preventDefault();
     API.createUser({
@@ -84,12 +100,7 @@ export default class Header extends Component {
       .catch(err => console.log(err));
   }
 
-
-  // Updates state when the email the user enters to sign in is changed
-  onLoginChange = e => {
-    this.setState({ loginEmail: e.target.value })
-  }
-
+  // "Signs in" with the email address a user inputs
   userLogin = e => {
     e.preventDefault();
     API.userLogin(this.state.loginEmail)
@@ -107,16 +118,15 @@ export default class Header extends Component {
       .catch(err => console.log(err))
   }
 
-
-  onTransactionChange = e => {
-    this.setState({ transactionAmount: e.target.value })
-  }
-
+  // Sends purchase to DB and updates user wallet
+  // TODO: Create the transcation in the transactions db
   buyTransaction = e => {
     e.preventDefault();
+
+    // Puts the state of the wallet in a variable so I can adjust the entire object accordingly before setting the state back to it
     let wallet = this.state.userWallet;
     let coinSymbol = this.state.cryptos[0][this.state.cryptoValue].symbol;
-    // let coinPrice = this.state.cryptos[0][this.state.cryptoValue].quotes.USD.price;
+    let coinPrice = this.state.cryptos[0][this.state.cryptoValue].quotes.USD.price;
 
     // Checks if the user can afford the transaction
     if (this.state.transactionAmount > wallet.cash) {
@@ -129,12 +139,14 @@ export default class Header extends Component {
 
       // Checks to see if the coin is in the user's wallet (i.e. not undefined).  If not it sets the coin amount to the transactionAmount.  Otherwise, it adds it.
       if (!wallet[coinSymbol]) {
-        wallet[coinSymbol] = Number(this.state.transactionAmount)
+        wallet[coinSymbol] = Number(this.state.transactionAmount/coinPrice)
       }
-      else { wallet[coinSymbol] += Number(this.state.transactionAmount) }
+      else { wallet[coinSymbol] += Number(this.state.transactionAmount/coinPrice) }
 
       // Updates the state of the wallet
       this.setState({ userWallet: wallet, transactionStatus: "Transaction complete!" })
+
+
     }
   }
 
