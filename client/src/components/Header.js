@@ -23,7 +23,9 @@ export default class Header extends Component {
     loginEmail: "Enter your email to sign in here",
     users: [],
     signedIn: {},
-    transactionAmount: 1
+    userWallet: {},
+    transactionAmount: 1,
+    transactionStatus: ''
   };
 
 
@@ -98,8 +100,8 @@ export default class Header extends Component {
           signedIn: {
             userName: res.data.userName,
             userEmail: res.data.userEmail,
-            userWallet: res.data.wallet
-          }
+          },
+          userWallet: res.data.wallet
         })
       })
       .catch(err => console.log(err))
@@ -107,7 +109,33 @@ export default class Header extends Component {
 
 
   onTransactionChange = e => {
-    this.setState({transactionAmount : e.target.value})
+    this.setState({ transactionAmount: e.target.value })
+  }
+
+  buyTransaction = e => {
+    e.preventDefault();
+    let wallet = this.state.userWallet;
+    let coinSymbol = this.state.cryptos[0][this.state.cryptoValue].symbol;
+    // let coinPrice = this.state.cryptos[0][this.state.cryptoValue].quotes.USD.price;
+
+    // Checks if the user can afford the transaction
+    if (this.state.transactionAmount > wallet.cash) {
+      this.setState({ transactionStatus: "You cannot afford this transaction!" })
+    }
+
+    // Allows the transaction if the user can afford it
+    else {
+      wallet.cash -= this.state.transactionAmount
+
+      // Checks to see if the coin is in the user's wallet (i.e. not undefined).  If not it sets the coin amount to the transactionAmount.  Otherwise, it adds it.
+      if (!wallet[coinSymbol]) {
+        wallet[coinSymbol] = Number(this.state.transactionAmount)
+      }
+      else { wallet[coinSymbol] += Number(this.state.transactionAmount) }
+
+      // Updates the state of the wallet
+      this.setState({ userWallet: wallet, transactionStatus: "Transaction complete!" })
+    }
   }
 
 
@@ -132,9 +160,12 @@ export default class Header extends Component {
         onLoginChange={this.onLoginChange}
         userLogin={this.userLogin}
         signedIn={this.state.signedIn}
+        userWallet={this.state.userWallet}
 
         onTransactionChange={this.onTransactionChange}
+        buyTransaction={this.buyTransaction}
         transactionAmount={this.state.transactionAmount}
+        transactionStatus={this.state.transactionStatus}
 
         users={this.state.users}
       />)

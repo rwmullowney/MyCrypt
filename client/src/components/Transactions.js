@@ -14,7 +14,7 @@ const Transactions = props => {
   let coinPrice = props.cryptos && props.cryptos[props.cryptoValue] && props.cryptos[props.cryptoValue].quotes.USD.price
 
   // let userWallet = JSON.parse(props.signedIn.userWallet);
-  console.log(props.signedIn.userWallet)
+  console.log(props.userWallet)
 
 
   return (
@@ -24,7 +24,7 @@ const Transactions = props => {
       {/* Tests that we can grab user data from the database */}
       <br />
       {/* https://stackoverflow.com/questions/17159295/accessing-object-with-key-as-number-php */}
-      {props.users[0].wallet}
+      {/* {props.users[0].wallet.cash} */}
       {/* {console.log(props.cryptos[props.value])} */}
 
       <div className="container">
@@ -51,7 +51,7 @@ const Transactions = props => {
         <h6>Signed in as:</h6>
         <p>Username: {props.signedIn.userName}</p>
         <p>Email: {props.signedIn.userEmail}</p>
-        <p>Wallet: {props.signedIn.userWallet}</p>
+        <p>Wallet cash: {props.userWallet.cash}</p>
 
 
         {/* Create a new user */}
@@ -108,16 +108,16 @@ const Transactions = props => {
               value={props.transactionAmount}
               onChange={props.onTransactionChange}
             />
-            <p>This will give you {(props.transactionAmount/coinPrice).toFixed(4)} {coinName}</p>
+            <p>This will give you {(props.transactionAmount / coinPrice).toFixed(5)} {coinName}</p>
           </div>
         </div>
 
-        <button className="btn btn-primary" id="buyTransaction">Buy</button>
+        <button className="btn btn-primary" id="buyTransaction" onClick={props.buyTransaction}>Buy</button>
         <button className="btn btn-danger" id="sellTransaction">Sell</button>
 
         <br />
         {/* Display whether transaction was successful (I think?) */}
-        <div id="transactionStatus"></div>
+        <div id="transactionStatus">{props.transactionStatus}</div>
 
 
         <hr />

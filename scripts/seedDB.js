@@ -21,22 +21,22 @@ const userSeed = [
   {
     userName: "user string 1",
     userEmail: "user email 1",
-    wallet: JSON.stringify(testWallet)
+    wallet: testWallet
   },
   {
     userName: "user string 2",
     userEmail: "user email 2",
-    wallet: JSON.stringify(testWallet)
+    wallet: testWallet
   },
   {
     userName: "user string 3",
     userEmail: "user email 3",
-    wallet: JSON.stringify(testWallet)
+    wallet: testWallet
   },
   {
     userName: "user string 4",
     userEmail: "user email 4",
-    wallet: JSON.stringify(testWallet)
+    wallet: testWallet
   },
 ];
 
