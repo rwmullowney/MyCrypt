@@ -19,8 +19,8 @@ export default class Header extends Component {
   state = {
     cryptos: [],
     cryptoValue: 52,
-    userEmail: 'Enter your email',
-    userAccount: "Sign in here",
+    createEmail: 'Enter your email to create your account',
+    loginEmail: "Enter your email to sign in here",
     users: [],
     signedIn: {},
   };
@@ -57,7 +57,6 @@ export default class Header extends Component {
       .catch(err => console.log(err));
   };
 
-
   // Update the crypto on the page
   onCryptoChange = e => {
     console.log("updating with " + e.target.value)
@@ -68,29 +67,29 @@ export default class Header extends Component {
 
   // Updates state when the email the user enters to create an account is changed
   onEmailChange = e => {
-    this.setState({ userEmail: e.target.value })
+    this.setState({ createEmail: e.target.value })
   }
-
 
   createUser = e => {
     e.preventDefault();
     API.createUser({
       userName: "test user",
-      userEmail: this.state.userEmail,
+      userEmail: this.state.createEmail,
       wallet: JSON.stringify(testWallet)
     })
       .then(res => this.loadUsers)
       .catch(err => console.log(err));
   }
 
+
   // Updates state when the email the user enters to sign in is changed
-  onAccountChange = e => {
-    this.setState({ userAccount: e.target.value })
+  onLoginChange = e => {
+    this.setState({ loginEmail: e.target.value })
   }
 
   userLogin = e => {
     e.preventDefault();
-    API.userLogin(this.state.userAccount)
+    API.userLogin(this.state.loginEmail)
       .then(res => {
         console.log("signed in")
         console.log(res.data)
@@ -119,12 +118,12 @@ export default class Header extends Component {
         cryptoValue={this.state.cryptoValue}
         onCryptoChange={this.onCryptoChange}
 
-        userEmail={this.state.userEmail}
+        createEmail={this.state.createEmail}
         onEmailChange={this.onEmailChange}
         createUser={this.createUser}
 
-        userAccount={this.state.userAccount}
-        onAccountChange={this.onAccountChange}
+        loginEmail={this.state.loginEmail}
+        onLoginChange={this.onLoginChange}
         userLogin={this.userLogin}
         signedIn={this.state.signedIn}
 

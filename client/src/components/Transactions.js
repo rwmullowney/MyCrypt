@@ -30,12 +30,12 @@ const Transactions = props => {
           <label className="col-2 col-form-label">User ID Login</label>
           <div className="col-10">
           <input
-              id="userAccount"
+              id="loginEmail"
               type="email"
               label="Email address"
               placeholder="Enter email"
-              value={props.userAccount}
-              onChange={props.onAccountChange}
+              value={props.loginEmail}
+              onChange={props.onLoginChange}
             />
           </div>
         </div>
@@ -52,14 +52,14 @@ const Transactions = props => {
 
         {/* Create a new user */}
         <div className="form-group">
-          <label className="col-2 col-form-label">User Email</label>
+          <label className="col-2 col-form-label">Create Account</label>
           <div className="col-10">
             <input
-              id="userEmail"
+              id="createEmail"
               type="email"
               label="Email address"
               placeholder="Enter email"
-              value={props.userEmail}
+              value={props.createEmail}
               onChange={props.onEmailChange}
             />
           </div>
