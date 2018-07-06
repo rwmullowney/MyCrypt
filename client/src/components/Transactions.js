@@ -13,11 +13,14 @@ const Transactions = props => {
   let coinName = props.cryptos && props.cryptos[props.cryptoValue] && props.cryptos[props.cryptoValue].name
   let coinPrice = props.cryptos && props.cryptos[props.cryptoValue] && props.cryptos[props.cryptoValue].quotes.USD.price
 
+  // let userWallet = JSON.parse(props.signedIn.userWallet);
+  console.log(props.signedIn.userWallet)
+
 
   return (
     <div className="transactions">
 
-      {/* {console.log(props)} */}
+      {console.log(props)}
       {/* Tests that we can grab user data from the database */}
       <br />
       {/* https://stackoverflow.com/questions/17159295/accessing-object-with-key-as-number-php */}
@@ -29,7 +32,8 @@ const Transactions = props => {
         <div className="form-group">
           <label className="col-2 col-form-label">User ID Login</label>
           <div className="col-10">
-          <input
+            <input
+              className="form-control"
               id="loginEmail"
               type="email"
               label="Email address"
@@ -45,9 +49,9 @@ const Transactions = props => {
 
 
         <h6>Signed in as:</h6>
-        <p>{props.signedIn.userSignedIn}</p>
-        <p>{props.signedIn.email}</p>
-        <p>{props.signedIn.userWallet}</p>
+        <p>Username: {props.signedIn.userName}</p>
+        <p>Email: {props.signedIn.userEmail}</p>
+        <p>Wallet: {props.signedIn.userWallet}</p>
 
 
         {/* Create a new user */}
@@ -55,6 +59,7 @@ const Transactions = props => {
           <label className="col-2 col-form-label">Create Account</label>
           <div className="col-10">
             <input
+              className="form-control"
               id="createEmail"
               type="email"
               label="Email address"
@@ -95,7 +100,15 @@ const Transactions = props => {
         <div className="form-group">
           <label className="col-2 col-form-label">Amount to trade:</label>
           <div className="col-10">
-            <input className="form-control" type="number" value="1" id="coinAmount" />
+            <input
+              className="form-control"
+              id="transactionAmount"
+              type="number"
+              label="Transaction amount"
+              value={props.transactionAmount}
+              onChange={props.onTransactionChange}
+            />
+            <p>This will give you {(props.transactionAmount/coinPrice).toFixed(4)} {coinName}</p>
           </div>
         </div>
 

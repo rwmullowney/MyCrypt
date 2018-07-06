@@ -13,7 +13,7 @@ const userSchema = new Schema({
     unique: true
   },
   wallet: {
-    type: String
+    type: Object
   }
 });
 

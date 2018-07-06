@@ -23,6 +23,7 @@ export default class Header extends Component {
     loginEmail: "Enter your email to sign in here",
     users: [],
     signedIn: {},
+    transactionAmount: 1
   };
 
 
@@ -75,7 +76,7 @@ export default class Header extends Component {
     API.createUser({
       userName: "test user",
       userEmail: this.state.createEmail,
-      wallet: JSON.stringify(testWallet)
+      wallet: testWallet
     })
       .then(res => this.loadUsers)
       .catch(err => console.log(err));
@@ -95,13 +96,18 @@ export default class Header extends Component {
         console.log(res.data)
         this.setState({
           signedIn: {
-            userSignedIn: res.data.userName,
-            email: res.data.userEmail,
+            userName: res.data.userName,
+            userEmail: res.data.userEmail,
             userWallet: res.data.wallet
           }
         })
       })
       .catch(err => console.log(err))
+  }
+
+
+  onTransactionChange = e => {
+    this.setState({transactionAmount : e.target.value})
   }
 
 
@@ -126,6 +132,9 @@ export default class Header extends Component {
         onLoginChange={this.onLoginChange}
         userLogin={this.userLogin}
         signedIn={this.state.signedIn}
+
+        onTransactionChange={this.onTransactionChange}
+        transactionAmount={this.state.transactionAmount}
 
         users={this.state.users}
       />)
