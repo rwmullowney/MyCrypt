@@ -9,8 +9,8 @@ import * as routes from '../routes';
 
 
 const Navigation = ({ authUser }) =>
+
   <div>
-const Navigation = () =>
   <AuthUserContext.Consumer>
     {authUser => authUser
       ? <NavigationAuth />
