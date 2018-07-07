@@ -16,7 +16,7 @@ router.route("/:userLogin")
 // Matches with "/api/users/transactions"  
 router.route("/transactions")
   .get(usersController.userLogin)
-  .post(usersController.buy)
+  .post(usersController.transaction)
 
 
 

@@ -119,37 +119,66 @@ export default class Header extends Component {
   }
 
   // Sends purchase to DB and updates user wallet
-  // TODO: Create the transcation in the transactions db
+  // TODO: can I make buy and sell methods of an overarching transaction function?
   buyTransaction = e => {
     e.preventDefault();
 
-    // Puts the state of the wallet in a variable so I can adjust the entire object accordingly before setting the state back to it
+    // Puts the state of the wallet in a variable so I can adjust the entire object accordingly before updating the db with it
     let wallet = this.state.userWallet;
     let coinSymbol = this.state.cryptos[0][this.state.cryptoValue].symbol;
     let coinPrice = this.state.cryptos[0][this.state.cryptoValue].quotes.USD.price;
+    let coinAmount = this.state.transactionAmount / coinPrice;
 
     // Checks if the user can afford the transaction
     if (this.state.transactionAmount > wallet.cash) {
-      this.setState({ transactionStatus: "You cannot afford this transaction!" })
+      this.setState({ transactionStatus: "You cannot afford this transaction!" });
     }
 
     // Allows the transaction if the user can afford it
     else {
-      wallet.cash -= this.state.transactionAmount
+      wallet.cash -= Number(this.state.transactionAmount);
 
       // Checks to see if the coin is in the user's wallet (i.e. not undefined).  If not it sets the coin amount to the transactionAmount.  Otherwise, it adds it.
       if (!wallet[coinSymbol]) {
-        wallet[coinSymbol] = Number(this.state.transactionAmount/coinPrice)
+        wallet[coinSymbol] = Number(coinAmount)
       }
-      else { wallet[coinSymbol] += Number(this.state.transactionAmount/coinPrice) }
+      else { wallet[coinSymbol] += Number(coinAmount) };
 
-      API.buy(this.state.loginEmail, wallet)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+      API.transaction(this.state.loginEmail, wallet)
+        // .then(res => console.log(res))
+        .catch(err => console.log(err));
 
       // Updates the state of the wallet
-      this.setState({ userWallet: wallet, transactionStatus: "Transaction complete!" })
+      this.setState({ userWallet: wallet, transactionStatus: "Transaction complete!" });
     }
+  }
+
+
+  sellTransaction = e => {
+    e.preventDefault();
+    console.log("selling")
+
+    // Puts the state of the wallet in a variable so I can adjust the entire object accordingly before updating the db with it
+    let wallet = this.state.userWallet;
+    let coinSymbol = this.state.cryptos[0][this.state.cryptoValue].symbol;
+    let coinPrice = this.state.cryptos[0][this.state.cryptoValue].quotes.USD.price;
+    let coinAmount = this.state.transactionAmount / coinPrice;
+
+    // Checks if the user can afford the transaction
+    if ((coinAmount) > wallet[coinSymbol]) {
+      this.setState({ transactionStatus: "You don't have that many coins to sell!" });
+    }
+    else {
+      wallet.cash += Number(this.state.transactionAmount);
+      wallet[coinSymbol] -= Number(coinAmount);
+    }
+
+    API.transaction(this.state.loginEmail, wallet)
+      // .then(res => console.log(res))
+      .catch(err => console.log(err));
+
+    // Updates the state of the wallet
+    this.setState({ userWallet: wallet, transactionStatus: "Transaction complete!" });
   }
 
 
@@ -178,6 +207,7 @@ export default class Header extends Component {
 
         onTransactionChange={this.onTransactionChange}
         buyTransaction={this.buyTransaction}
+        sellTransaction={this.sellTransaction}
         transactionAmount={this.state.transactionAmount}
         transactionStatus={this.state.transactionStatus}
 

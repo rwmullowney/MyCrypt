@@ -19,7 +19,7 @@ export default {
     createUser: function (userData) {
         return axios.post("api/users", userData);
     },
-    buy: function (userLogin, wallet) {
+    transaction: function (userLogin, wallet) {
         return axios.post("/api/users/transactions", {
             userLogin: userLogin,
             wallet: wallet

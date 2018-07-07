@@ -29,7 +29,7 @@ module.exports = {
       );
   },
 
-  buy: function (req, res) {
+  transaction: function (req, res) {
     db.User
       .findOneAndUpdate({ userEmail: req.body.userLogin }, req.body)
       .then(dbModel => res.json(dbModel))

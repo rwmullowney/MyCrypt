@@ -108,12 +108,12 @@ const Transactions = props => {
               value={props.transactionAmount}
               onChange={props.onTransactionChange}
             />
-            <p>This will give you {(props.transactionAmount / coinPrice).toFixed(5)} {coinName}</p>
+            <p>This amounts to {(props.transactionAmount / coinPrice).toFixed(5)} {coinName}</p>
           </div>
         </div>
 
         <button className="btn btn-primary" id="buyTransaction" onClick={props.buyTransaction}>Buy</button>
-        <button className="btn btn-danger" id="sellTransaction">Sell</button>
+        <button className="btn btn-danger" id="sellTransaction" onClick={props.sellTransaction}>Sell</button>
 
         <br />
         {/* Display whether transaction was successful (I think?) */}
