@@ -18,7 +18,7 @@ class HomePage extends Component {
     const { onSetUsers } = this.props;
 
     db.onceGetUsers().then(snapshot =>
-      this.setState(() => ({ users: snapshot.val() }))
+      onSetUsers(snapshot.val())
     );
   }
 
@@ -46,12 +46,12 @@ const UserList = ({ users }) =>
   </div>
 
 const mapStateToProps = (state) => ({
-    users: state.userState.users,
-  });
-  
-  const mapDispatchToProps = (dispatch) => ({
-    onSetUsers: (users) => dispatch({ type: 'USERS_SET', users }),
-  });
+  users: state.userState.users,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onSetUsers: (users) => dispatch({ type: 'USERS_SET', users }),
+});
 
 const authCondition = (authUser) => !!authUser;
 
@@ -59,3 +59,4 @@ export default compose(
   withAuthorization(authCondition),
   connect(mapStateToProps, mapDispatchToProps)
 )(HomePage);
+

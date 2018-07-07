@@ -109,12 +109,12 @@ class SignUpForm extends Component {
           placeholder="Confirm Password"
         />
         <button type="submit">
+                <button disabled={isInvalid} type="submit"> </button>
           Sign Up
         </button>
 
         { error && <p>{error.message}</p> }
-
-      </form>
+     </form> 
     );
   }
 }
