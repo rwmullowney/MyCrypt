@@ -3,9 +3,7 @@ const db = require("../models");
 mongoose.Promise = global.Promise;
 
 let testWallet = {
-  cash: 12000,
-  BTC: 388,
-  XRP: 952
+  cash: 12000
 }
 
 // This file empties the Books collection and inserts the books below

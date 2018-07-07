@@ -5,13 +5,19 @@ const usersController = require("../../controllers/usersController");
 router.route("/")
   .get(usersController.findAll)
   .post(usersController.createUser)
-  // .get(usersController.userLogin);
+// .get(usersController.userLogin);
 
 // Matches with "/api/users/:userLogin"
-router
-  .route("/:userLogin")
+router.route("/:userLogin")
   .get(usersController.userLogin)
-  // .put(usersController.update)
-  // .delete(usersController.remove);
+// .put(usersController.buy)
+// .delete(usersController.remove);
+
+// Matches with "/api/users/transactions"  
+router.route("/transactions")
+  .get(usersController.userLogin)
+  .post(usersController.buy)
+
+
 
 module.exports = router;

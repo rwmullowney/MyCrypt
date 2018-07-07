@@ -143,10 +143,12 @@ export default class Header extends Component {
       }
       else { wallet[coinSymbol] += Number(this.state.transactionAmount/coinPrice) }
 
+      API.buy(this.state.loginEmail, wallet)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+
       // Updates the state of the wallet
       this.setState({ userWallet: wallet, transactionStatus: "Transaction complete!" })
-
-
     }
   }
 
