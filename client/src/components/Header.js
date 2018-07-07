@@ -171,14 +171,21 @@ export default class Header extends Component {
     else {
       wallet.cash += Number(this.state.transactionAmount);
       wallet[coinSymbol] -= Number(coinAmount);
-    }
+      
+      if (wallet[coinSymbol] === 0){
+        delete wallet[coinSymbol];
+      }
 
-    API.transaction(this.state.loginEmail, wallet)
-      // .then(res => console.log(res))
-      .catch(err => console.log(err));
+      // TODO: Check if coinSymbol amount hits zero and remove it from wallet if so
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete
 
-    // Updates the state of the wallet
-    this.setState({ userWallet: wallet, transactionStatus: "Transaction complete!" });
+      API.transaction(this.state.loginEmail, wallet)
+        // .then(res => console.log(res))
+        .catch(err => console.log(err));
+
+      // Updates the state of the wallet
+      this.setState({ userWallet: wallet, transactionStatus: "Transaction complete!" });
+    };
   }
 
 
