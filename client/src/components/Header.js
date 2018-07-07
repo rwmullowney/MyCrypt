@@ -2,9 +2,17 @@ import React, { Component } from 'react';
 import Transactions from "./Transactions"
 import API from "../utils/API";
 
+
+import { Link } from 'react-router-dom';
+import * as routes from '../constants/routes';
+
 // Defines variable for use as CSS
 var textStyle = {
   fontFamily: "Georgia"
+};
+
+var removeListBullet = {
+  listStyleType: 'none'
 };
 
 // Dummy wallet for populating newly created users with currency
@@ -171,8 +179,8 @@ export default class Header extends Component {
     else {
       wallet.cash += Number(this.state.transactionAmount);
       wallet[coinSymbol] -= Number(coinAmount);
-      
-      if (wallet[coinSymbol] === 0){
+
+      if (wallet[coinSymbol] === 0) {
         delete wallet[coinSymbol];
       }
 
@@ -186,7 +194,7 @@ export default class Header extends Component {
       // Updates the state of the wallet
       this.setState({ userWallet: wallet, transactionStatus: "Transaction complete!" });
     };
-  }
+  };
 
 
   renderTransactions() {
@@ -236,7 +244,21 @@ export default class Header extends Component {
 
         <hr />
 
-        {this.renderTransactions()}
+          <div>
+            <ul>
+              <div className="row justify-content-center">
+                <li className="mx-5" style={removeListBullet}><Link to={routes.SIGN_IN}>Sign In</Link></li>
+                <li className="mx-5" style={removeListBullet}><Link to={routes.LANDING}>Landing</Link></li>
+
+                {/* PH = Placeholder, nonfunctional route right now) */}
+                <li className="mx-5" style={removeListBullet}><Link to={routes.HOME}>Home PH</Link></li>
+                <li className="mx-5" style={removeListBullet}><Link to={routes.ACCOUNT}>Account PH</Link></li>
+              </div>
+            </ul>
+          </div>
+
+
+        {/* {this.renderTransactions()} */}
 
       </div>
     )
