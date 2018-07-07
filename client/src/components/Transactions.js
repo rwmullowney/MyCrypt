@@ -4,37 +4,72 @@ import CoinMenu from "./coinmenu";
 
 const Transactions = props => {
   // debugger;
-  console.log(props.cryptos[props.value])
-  let obj = props.cryptos[props.value];
+  // console.log(props.cryptos)
 
-  console.log(obj)
-  return(
+  // Defining coin-related variables
+  // Builds the URL to display the coin icon on the page
+  let coinSymbol = props.cryptos && props.cryptos[props.cryptoValue] && props.cryptos[props.cryptoValue].symbol.toLowerCase()
+  let iconURL = "https://unpkg.com/@icon/cryptocurrency-icons/icons/" + coinSymbol + ".svg"
+  let coinName = props.cryptos && props.cryptos[props.cryptoValue] && props.cryptos[props.cryptoValue].name
+  let coinPrice = props.cryptos && props.cryptos[props.cryptoValue] && props.cryptos[props.cryptoValue].quotes.USD.price
+
+  // let userWallet = JSON.parse(props.signedIn.userWallet);
+  console.log(props.userWallet)
+
+
+  return (
     <div className="transactions">
 
-      {'test'}
-      {/* {JSON.stringify(props.cryptos[52])} */}
-      {props.cryptos.length > 0 ? props.cryptos[0].symbol : null}
+      {console.log(props)}
+      {/* Tests that we can grab user data from the database */}
+      <br />
+      {/* https://stackoverflow.com/questions/17159295/accessing-object-with-key-as-number-php */}
+      {/* {props.users[0].wallet.cash} */}
+      {/* {console.log(props.cryptos[props.value])} */}
 
       <div className="container">
-        {/* {{!-- Sign in as a select userID --}} */}
+        {/* {{!-- Sign in as a select user email --}} */}
         <div className="form-group">
           <label className="col-2 col-form-label">User ID Login</label>
           <div className="col-10">
-            <input className="form-control" type="email" value="1" id="loginID" />
+            <input
+              className="form-control"
+              id="loginEmail"
+              type="email"
+              label="Email address"
+              placeholder="Enter email"
+              value={props.loginEmail}
+              onChange={props.onLoginChange}
+            />
           </div>
         </div>
         <div id="showLogin"></div>
-        <button className="btn btn-success" id="userLogin">Login</button>
+        <button className="btn btn-success" id="userLogin" onClick={props.userLogin}>Login</button>
+
+
+
+        <h6>Signed in as:</h6>
+        <p>Username: {props.signedIn.userName}</p>
+        <p>Email: {props.signedIn.userEmail}</p>
+        <p>Wallet cash: {props.userWallet.cash}</p>
 
 
         {/* Create a new user */}
         <div className="form-group">
-          <label className="col-2 col-form-label">User Email</label>
+          <label className="col-2 col-form-label">Create Account</label>
           <div className="col-10">
-            <input className="form-control" type="email" value="bootstrap@example.com" id="userEmail" />
+            <input
+              className="form-control"
+              id="createEmail"
+              type="email"
+              label="Email address"
+              placeholder="Enter email"
+              value={props.createEmail}
+              onChange={props.onEmailChange}
+            />
           </div>
         </div>
-        <button className="btn btn-success" id="submitEmail">Create user</button>
+        <button className="btn btn-success" id="submitEmail" onClick={props.createUser}>Create user</button>
 
 
 
@@ -45,47 +80,57 @@ const Transactions = props => {
         <div className="col-6">
           <div className="form-group">
             <label >Currencies:</label>
-            <CoinMenu 
-            
-            // Passing these in here too because for some reason I can't access the props properties without
-            // them being undefined otherwise.  Probably an async issue.
-            value={props.value}
-            onCryptoChange={props.onCryptoChange}
+            <CoinMenu
+
+              cryptoValue={props.cryptoValue}
+              onCryptoChange={props.onCryptoChange}
             />
           </div>
         </div>
 
-        {/* TODO: Display coin API information here */}
 
-        { console.log(props)}
-        { console.log(props.symbol) }
+        {/* {console.log(props)}
+        {console.log(props.symbol)} */}
 
-        <div id="coinIcon">{props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].symbol}</div>
-        <div id="coinName">{props.cryptos && props.cryptos[props.value] && props.cryptos[props.value].name}</div>
-        <div id="coinPrice"></div>
+
+        <div id="coinIcon"><img height="32" width="32" src={iconURL} /></div>
+        <div id="coinName">{coinName}</div>
+        <div id="coinPrice">${coinPrice}</div>
 
         <div className="form-group">
           <label className="col-2 col-form-label">Amount to trade:</label>
           <div className="col-10">
-            <input className="form-control" type="number" value="1" id="coinAmount" />
+            <input
+              className="form-control"
+              id="transactionAmount"
+              type="number"
+              label="Transaction amount"
+              value={props.transactionAmount}
+              onChange={props.onTransactionChange}
+            />
+            <p>This amounts to {(props.transactionAmount / coinPrice).toFixed(5)} {coinName}</p>
           </div>
         </div>
 
-        <button className="btn btn-primary" id="buyTransaction">Buy</button>
-        <button className="btn btn-danger" id="sellTransaction">Sell</button>
+        <button className="btn btn-primary" id="buyTransaction" onClick={props.buyTransaction}>Buy</button>
+        <button className="btn btn-danger" id="sellTransaction" onClick={props.sellTransaction}>Sell</button>
 
         <br />
         {/* Display whether transaction was successful (I think?) */}
-        <div id="transactionStatus"></div>
+        <div id="transactionStatus">{props.transactionStatus}</div>
 
+        <button className="btn btn-primary" id="buyTransaction">Buy</button>
+        <button className="btn btn-danger" id="sellTransaction">Sell</button>
 
         <hr />
 
         <h3>This user's transactions:</h3>
         <div id="userTransacations"></div>
         <br />
+
         <h3>Your wallet:</h3>
         <div id="userCoins"></div>
+
       </div>
     </div>
   )
