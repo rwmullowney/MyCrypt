@@ -15,16 +15,16 @@ export default class Transactions extends Component {
 
   // Set initial state
   state = {
-    user: '',
-    cryptos: [],
-    cryptoValue: 52,
-    createEmail: 'Enter your email to create your account',
-    loginEmail: "Enter your email to sign in here",
-    users: [],
-    signedIn: {},
-    userWallet: {},
-    transactionAmount: 1,
-    transactionStatus: ''
+    user: ''
+    // cryptos: [],
+    // cryptoValue: 52,
+    // createEmail: 'Enter your email to create your account',
+    // loginEmail: "Enter your email to sign in here",
+    // users: [],
+    // signedIn: {},
+    // userWallet: {},
+    // transactionAmount: 1,
+    // transactionStatus: ''
   };
 
 
@@ -44,7 +44,7 @@ export default class Transactions extends Component {
   };
 
 
-  render(props) {
+  render() {
 
     return (
       <div>
