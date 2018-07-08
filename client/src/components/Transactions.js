@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CoinMenu from "./CoinMenu";
+import CoinMenu from "./coinmenu";
 
 
 const Transactions = props => {
@@ -119,6 +119,8 @@ const Transactions = props => {
         {/* Display whether transaction was successful (I think?) */}
         <div id="transactionStatus">{props.transactionStatus}</div>
 
+        <button className="btn btn-primary" id="buyTransaction">Buy</button>
+        <button className="btn btn-danger" id="sellTransaction">Sell</button>
 
         <hr />
 
@@ -133,5 +135,4 @@ const Transactions = props => {
     </div>
   )
 }
-
 export default Transactions

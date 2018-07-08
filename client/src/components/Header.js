@@ -8,6 +8,7 @@ import * as routes from '../constants/routes';
 
 
 
+
 // Defines variable for use as CSS
 var textStyle = {
   fontFamily: "Georgia"
