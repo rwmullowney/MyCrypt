@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
-import { 
-  BrowserRouter as Router,
-  Route,
- } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import './App.css';
+import Header from './components/Header';
+import Landing from './components/Landing';
+import SignUp from './components/SignUp';
+import SignIn from './components/SignIn';
 
-import Navigation from './components/Navigation';
-import LandingPage from './Landing';
-import SignUpPage from './SignUp';
-import SignInPage from './components/SignIn';
-import PasswordForgetPage from './components/PasswordForget';
-import HomePage from './components/Home';
-import AccountPage from './Account';
-
-import * as routes from './routes';
+import * as routes from './constants/routes';
 import { firebase } from './firebase';
-
 
 class App extends Component {
   constructor(props) {
@@ -29,49 +22,52 @@ class App extends Component {
     firebase.auth.onAuthStateChanged(authUser => {
       authUser
         ? this.setState(() => ({ authUser }))
-        : this.setState(() => ({ authUser: null }));
+        : this.setState(() => ({ authUser: null }))
+        console.log(this.state.authUser.email)
+        ;
     });
-    console.log (this.state);
   }
-
+  
   render() {
     return (
-  <Router>
-    <div>
-     <Navigation authUser={this.state.authUser} />
+      <Router>
+        <div>
+          <Header authUser={this.state.authUser} />
 
-    <hr/>
+          <hr />
 
-<Route
-  exact path={routes.LANDING}
-  component={() => <LandingPage />}
-/>
-<Route
-  exact path={routes.SIGN_UP}
-  component={() => <SignUpPage />}
-/>
-<Route
-  exact path={routes.SIGN_IN}
-  component={() => <SignInPage />}
-/>
-<Route
-  exact path={routes.PASSWORD_FORGET}
-  component={() => <PasswordForgetPage />}
-/>
-<Route
-  exact path={routes.HOME}
-  component={() => <HomePage />}
-/>
-<Route
-  exact path={routes.ACCOUNT}
-  component={() => <AccountPage />}
-/>
-</div>
-  </Router>
+          <Route
+            exact path={routes.LANDING}
+            component={() => <Landing />}
+          />
+          <Route
+            exact path={routes.SIGN_UP}
+            component={() => <SignUp />}
+          />
+          <Route
+            exact path={routes.SIGN_IN}
+            component={() => <SignIn />}
+          />
+
+          {/* Not in use yet */}
+          {/* <Route
+            exact path={routes.PASSWORD_FORGET}
+            component={() => <PasswordForgetPage />}
+          /> */}
+          {/* Not in use yet - Where the user is redirected after signing up/in*/}
+          {/* <Route
+            exact path={routes.HOME}
+            component={() => <HomePage />}
+          /> */}
+          {/* Not in use yet */}
+          {/* <Route
+            exact path={routes.ACCOUNT}
+            component={() => <AccountPage />}
+          /> */}
+        </div>
+      </Router>
     );
-  }
-}
+  };
+};
 
-export default (App);
-
-
+export default App;
