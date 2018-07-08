@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Landing from './components/Landing';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
+import Transactions from './components/Transactions';
 
 import * as routes from './constants/routes';
 import { firebase } from './firebase';
@@ -23,11 +24,24 @@ class App extends Component {
       authUser
         ? this.setState(() => ({ authUser }))
         : this.setState(() => ({ authUser: null }))
-        console.log(this.state.authUser.email)
+      console.log(this.state.authUser.email)
         ;
     });
   }
-  
+
+
+  renderTransactions() {
+    if(this.state.authUser){
+      console.log("Signed in now")
+      console.log(this.state.authUser.email)
+      return (<Transactions user={this.state.authUser.email} />)
+      
+    }
+  }
+
+
+
+
   render() {
     return (
       <Router>
@@ -47,6 +61,12 @@ class App extends Component {
           <Route
             exact path={routes.SIGN_IN}
             component={() => <SignIn />}
+          />
+          <Route
+            exact path={routes.TRANSACTIONS}
+            component={() => 
+            this.renderTransactions()
+            }
           />
 
           {/* Not in use yet */}

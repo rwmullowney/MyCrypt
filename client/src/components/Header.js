@@ -46,6 +46,7 @@ const HeaderAuth = () =>
       <li className="mx-5" style={removeListBullet}><Link to={routes.HOME}>Home</Link></li>
       <li className="mx-5" style={removeListBullet}><Link to={routes.LANDING}>Landing</Link></li>
       <li className="mx-5" style={removeListBullet}><Link to={routes.ACCOUNT}>Account</Link></li>
+      <li className="mx-5" style={removeListBullet}><Link to={routes.TRANSACTIONS}>Transactions</Link></li>
       <li className="mx-5" style={removeListBullet}><SignOutButton /></li>
     </div>
   </ul>
