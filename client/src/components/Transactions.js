@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CoinMenu from "./CoinMenu";
+import API from "../utils/API"
 
 
 
@@ -15,8 +16,8 @@ export default class Transactions extends Component {
 
   // Set initial state
   state = {
-    user: ''
-    // cryptos: [],
+    user: '',
+    cryptos: []
     // cryptoValue: 52,
     // createEmail: 'Enter your email to create your account',
     // loginEmail: "Enter your email to sign in here",
@@ -35,12 +36,23 @@ export default class Transactions extends Component {
   }
 
   componentDidMount = () => {
-    console.log("component mounted")
-    console.log(this.state)
+    this.cryptoAPI();
+
     // this.setState = {user: props.user}
-    // console.log(props)
     // this.cryptoAPI();
     // this.loadUsers();
+  };
+
+  cryptoAPI() {
+    API.search()
+      .then(
+        res => {
+          // Puts initial response (object of objects) into an array so we can check it's length for rendering (similar to users)
+          this.setState({ cryptos: [res.data.data] })
+          console.log(this.state)
+        }
+      )
+      .catch(err => console.log(err));
   };
 
 
