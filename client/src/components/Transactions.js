@@ -48,7 +48,7 @@ export default class Transactions extends Component {
       .then(
         res => {
           // Puts initial response (object of objects) into an array so we can check it's length for rendering (similar to users)
-          this.setState({ cryptos: [res.data.data] })
+          this.setState({ cryptos: res.data.data })
           console.log(this.state)
         }
       )
@@ -57,12 +57,10 @@ export default class Transactions extends Component {
 
 
   render() {
-
     return (
-      <div>
-        <h1>test</h1>
-
-        <p>Signed in as: {this.state.user}</p>
+      <div className="container">
+        <p className="text-center">Signed in as: {this.state.user}</p>
+        <p>{JSON.stringify(this.state.cryptos)}</p>
       </div>
     );
   }

@@ -30,14 +30,20 @@ class App extends Component {
   }
 
 
-  // renderTransactions() {
-  //   if(this.state.authUser){
-  //     console.log("Signed in now")
-  //     console.log(this.state.authUser.email)
-  //     return (<Transactions user={this.state.authUser.email} />)
-
-  //   }
-  // }
+  renderTransactions() {
+    if (this.state.authUser) {
+      console.log("Signed in now")
+      console.log(this.state.authUser.email)
+      return (<Transactions user={this.state.authUser.email} />)
+    }
+    else {
+      return (
+        <div className="container">
+          <p className="text-center">You must be signed in to view this page!</p>
+        </div>
+      )
+    }
+  }
 
 
 
@@ -65,7 +71,7 @@ class App extends Component {
           <Route
             exact path={routes.TRANSACTIONS}
             component={() =>
-              <Transactions user={this.state.authUser.email} />
+              this.renderTransactions()
             }
           />
 
