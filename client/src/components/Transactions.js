@@ -34,7 +34,7 @@ export default class Transactions extends Component {
     console.log(props)
   }
 
-  componentDidMount = (props) => {
+  componentDidMount = () => {
     console.log("component mounted")
     console.log(this.state)
     // this.setState = {user: props.user}

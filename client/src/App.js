@@ -30,14 +30,14 @@ class App extends Component {
   }
 
 
-  renderTransactions() {
-    if(this.state.authUser){
-      console.log("Signed in now")
-      console.log(this.state.authUser.email)
-      return (<Transactions user={this.state.authUser.email} />)
-      
-    }
-  }
+  // renderTransactions() {
+  //   if(this.state.authUser){
+  //     console.log("Signed in now")
+  //     console.log(this.state.authUser.email)
+  //     return (<Transactions user={this.state.authUser.email} />)
+
+  //   }
+  // }
 
 
 
@@ -64,8 +64,8 @@ class App extends Component {
           />
           <Route
             exact path={routes.TRANSACTIONS}
-            component={() => 
-            this.renderTransactions()
+            component={() =>
+              <Transactions user={this.state.authUser.email} />
             }
           />
 
