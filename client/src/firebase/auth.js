@@ -18,4 +18,8 @@ export const doPasswordReset = (email) =>
 
 // Password Change
 export const doPasswordUpdate = (password) =>
+<<<<<<< HEAD
     auth.currentUser.updatePassword(password);
+=======
+    auth.currentUser.updatePassword(password);
+>>>>>>> 07324aaf1aecad5e3048c4d2934b9d137d8ac021
