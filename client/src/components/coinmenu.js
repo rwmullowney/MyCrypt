@@ -26,4 +26,4 @@ class CoinMenu extends Component {
     };
   };
 
-  export default CoinMenu;
+  export default CoinMenu
