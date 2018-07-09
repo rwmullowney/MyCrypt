@@ -7,10 +7,6 @@ import * as routes from '../constants/routes';
 
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 07324aaf1aecad5e3048c4d2934b9d137d8ac021
 
 // Defines variable for use as CSS
 var textStyle = {
@@ -50,10 +46,7 @@ const HeaderAuth = () =>
       <li className="mx-5" style={removeListBullet}><Link to={routes.HOME}>Home</Link></li>
       <li className="mx-5" style={removeListBullet}><Link to={routes.LANDING}>Landing</Link></li>
       <li className="mx-5" style={removeListBullet}><Link to={routes.ACCOUNT}>Account</Link></li>
-<<<<<<< HEAD
       <li className="mx-5" style={removeListBullet}><Link to={routes.TRANSACTIONS}>Transactions</Link></li>
-=======
->>>>>>> 07324aaf1aecad5e3048c4d2934b9d137d8ac021
       <li className="mx-5" style={removeListBullet}><SignOutButton /></li>
     </div>
   </ul>
