@@ -19,9 +19,7 @@ var removeListBullet = {
 };
 
 // Dummy wallet for populating newly created users with currency
-let testWallet = {
-  cash: 10000
-}
+
 
 
 

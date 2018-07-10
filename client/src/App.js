@@ -7,8 +7,14 @@ import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Transactions from './components/Transactions';
 
+import API from "./utils/API"
+
 import * as routes from './constants/routes';
 import { firebase } from './firebase';
+
+let newWallet = {
+  cash: 10000
+}
 
 class App extends Component {
   constructor(props) {
@@ -26,14 +32,40 @@ class App extends Component {
         : this.setState(() => ({ authUser: null }))
       console.log(this.state.authUser.email)
         ;
-    });
+        this.userLogin();
+    }
+  );
+  }
+
+  userLogin = () => {
+    API.userLogin(this.state.authUser.email)
+      .then(res => {
+        console.log("signing in");
+        console.log(res.data);
+        if(res.data === null){
+          console.log("account not found");
+          this.createUser();
+        };
+      })
+      .catch(err => console.log(err))
+  };
+
+    createUser = () => {
+      console.log("creating account")
+    API.createUser({
+      userName: "test user",
+      userEmail: this.state.authUser.email,
+      wallet: newWallet
+    })
+      .then(res => this.loadUsers)
+      .catch(err => console.log(err));
   }
 
 
   renderTransactions() {
     if (this.state.authUser) {
-      console.log("Signed in now")
-      console.log(this.state.authUser.email)
+      // console.log("Signed in now")
+      // console.log(this.state.authUser.email)
       return (<Transactions user={this.state.authUser.email} />)
     }
     else {

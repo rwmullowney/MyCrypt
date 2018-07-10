@@ -4,12 +4,6 @@ import API from "../utils/API"
 
 
 
-// Defining coin-related variables
-// Builds the URL to display the coin icon on the page
-
-
-
-
 
 
 
@@ -34,9 +28,6 @@ export default class Transactions extends Component {
     // transactionStatus: ''
   };
 
-
-
-
   constructor(props) {
     super(props);
     this.state.user = props.user;
@@ -46,7 +37,6 @@ export default class Transactions extends Component {
   componentDidMount = () => {
     this.cryptoAPI();
   };
-
   // ==============================================
   // onChange Functions
   // ==============================================
