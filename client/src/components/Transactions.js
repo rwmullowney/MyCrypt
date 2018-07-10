@@ -4,6 +4,8 @@ import API from "../utils/API"
 
 
 
+// Defining coin-related variables
+// Builds the URL to display the coin icon on the page
 
 
 
@@ -14,11 +16,15 @@ import API from "../utils/API"
 export default class Transactions extends Component {
 
 
+  // Defining coin-related variables
+  // Builds the URL to display the coin icon on the page
+
+
   // Set initial state
   state = {
     user: '',
-    cryptos: []
-    // cryptoValue: 52,
+    cryptos: [],
+    cryptoValue: 1,
     // createEmail: 'Enter your email to create your account',
     // loginEmail: "Enter your email to sign in here",
     // users: [],
@@ -29,6 +35,8 @@ export default class Transactions extends Component {
   };
 
 
+
+
   constructor(props) {
     super(props);
     this.state.user = props.user;
@@ -37,11 +45,43 @@ export default class Transactions extends Component {
 
   componentDidMount = () => {
     this.cryptoAPI();
-
-    // this.setState = {user: props.user}
-    // this.cryptoAPI();
-    // this.loadUsers();
   };
+
+  // ==============================================
+  // onChange Functions
+  // ==============================================
+
+  // Update the crypto on the page
+  onCryptoChange = e => {
+    console.log("updating with " + e.target.value);
+    this.setState({ cryptoValue: e.target.value });
+  }
+
+  // Conditionally renders the coin menu/information once the crypto API information is loaded
+  renderCoinMenu = () => {
+    let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol.toLowerCase();
+    let iconURL = "https://unpkg.com/@icon/cryptocurrency-icons/icons/" + coinSymbol + ".svg";
+    let coinName = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].name;
+    let coinPrice = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price;
+
+    if (this.state.cryptos) {
+      return (
+        <div>
+          <CoinMenu
+            cryptos={this.state.cryptos}
+            cryptoValue={this.state.cryptoValue}
+            onCryptoChange={this.onCryptoChange}
+          />
+          <div className="mt-3">
+            <div id="coinIcon"><img height="32" width="32" src={iconURL} /></div>
+            <div id="coinName">Name: {coinName}</div>
+            <div id="coinPrice">${coinPrice}</div>
+          </div>
+        </div>
+      );
+    };
+  };
+
 
   cryptoAPI() {
     API.search()
@@ -49,7 +89,6 @@ export default class Transactions extends Component {
         res => {
           // Puts initial response (object of objects) into an array so we can check it's length for rendering (similar to users)
           this.setState({ cryptos: res.data.data })
-          console.log(this.state)
         }
       )
       .catch(err => console.log(err));
@@ -57,11 +96,29 @@ export default class Transactions extends Component {
 
 
   render() {
+
     return (
+
       <div className="container">
         <p className="text-center">Signed in as: {this.state.user}</p>
-        <p>{JSON.stringify(this.state.cryptos)}</p>
+        {/* <p>{JSON.stringify(this.state.cryptos)}</p> */}
+        <p></p>
+
+
+        <h3 className="mt-3">Select the currency you'd like to buy:</h3>
+        <div className="col-6">
+          <div className="form-group">
+            <label >Currencies:</label>
+            {this.renderCoinMenu()}
+          </div>
+        </div>
+
       </div>
+
+
+
+
+
     );
   }
 }
@@ -89,13 +146,6 @@ export default class Transactions extends Component {
 const pastTransactions = props => {
   // debugger;
   // console.log(props.cryptos)
-
-  // Defining coin-related variables
-  // Builds the URL to display the coin icon on the page
-  // let coinSymbol = props.cryptos && props.cryptos[props.cryptoValue] && props.cryptos[props.cryptoValue].symbol.toLowerCase()
-  // let iconURL = "https://unpkg.com/@icon/cryptocurrency-icons/icons/" + coinSymbol + ".svg"
-  // let coinName = props.cryptos && props.cryptos[props.cryptoValue] && props.cryptos[props.cryptoValue].name
-  // let coinPrice = props.cryptos && props.cryptos[props.cryptoValue] && props.cryptos[props.cryptoValue].quotes.USD.price
 
   // let userWallet = JSON.parse(props.signedIn.userWallet);
   // console.log(props.userWallet)
@@ -154,23 +204,6 @@ const pastTransactions = props => {
           </div>
         </div>
         <button className="btn btn-success" id="submitEmail" onClick={props.createUser}>Create user</button> */}
-
-
-
-
-      {/* Can I just have this read the currnt value of the select form
-        and then display other stuff based on that current value? */}
-      <h2 className="mt-3">Select the currency you'd like to buy:</h2>
-      <div className="col-6">
-        <div className="form-group">
-          <label >Currencies:</label>
-          <CoinMenu
-
-          // cryptoValue={props.cryptoValue}
-          // onCryptoChange={props.onCryptoChange}
-          />
-        </div>
-      </div>
 
 
       {/* {console.log(props)}
