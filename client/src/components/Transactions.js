@@ -10,8 +10,6 @@ import API from "../utils/API"
 export default class Transactions extends Component {
 
 
-  // Defining coin-related variables
-  // Builds the URL to display the coin icon on the page
 
 
   // Set initial state
@@ -19,13 +17,8 @@ export default class Transactions extends Component {
     user: '',
     cryptos: [],
     cryptoValue: 1,
-    // createEmail: 'Enter your email to create your account',
-    // loginEmail: "Enter your email to sign in here",
-    // users: [],
-    // signedIn: {},
-    // userWallet: {},
-    // transactionAmount: 1,
-    // transactionStatus: ''
+    transactionAmount: 1,
+    transactionStatus: ''
   };
 
   constructor(props) {
@@ -47,8 +40,107 @@ export default class Transactions extends Component {
     this.setState({ cryptoValue: e.target.value });
   }
 
+  //   // Updates state when user changes purchase amount
+  onTransactionChange = e => {
+    this.setState({ transactionAmount: e.target.value })
+  }
+
+
+
+  // ==============================================
+  // API/DB Functions
+  // ==============================================
+
+  cryptoAPI() {
+    API.search()
+      .then(
+        res => {
+          // Puts initial response (object of objects) into an array so we can check it's length for rendering (similar to users)
+          this.setState({ cryptos: res.data.data })
+        }
+      )
+      .catch(err => console.log(err));
+  };
+
+  buyTransaction = e => {
+    e.preventDefault();
+
+    // Puts the state of the wallet in a variable so I can adjust the entire object accordingly before updating the db with it
+    let wallet = this.props.wallet;
+    let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol;
+    let coinPrice = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price;
+    let coinAmount = this.state.transactionAmount / coinPrice;
+    console.log(wallet.cash)
+    console.log(this.state.transactionAmount)
+    console.log(coinAmount)
+
+    // Checks if the user can afford the transaction
+    if (Number(this.state.transactionAmount) > wallet.cash) {
+      this.setState({ transactionStatus: "You cannot afford this transaction!" });
+    }
+
+    // Allows the transaction if the user can afford it
+    else {
+      wallet.cash -= Number(this.state.transactionAmount);
+
+      // Checks to see if the coin is in the user's wallet (i.e. not undefined).  If not it sets the coin amount to the transactionAmount.  Otherwise, it adds it.
+      if (!wallet[coinSymbol]) {
+        wallet[coinSymbol] = coinAmount.toFixed(5)
+      }
+      else { wallet[coinSymbol] += coinAmount.toFixed(5) };
+
+      API.transaction(this.state.user, wallet)
+        // .then(res => console.log(res))
+        .catch(err => console.log(err));
+
+      // Updates the state of the wallet
+      this.setState({ wallet: wallet, transactionStatus: "Transaction complete!" });
+    }
+  }
+
+
+  sellTransaction = e => {
+    e.preventDefault();
+    console.log("selling")
+
+    // Puts the state of the wallet in a variable so I can adjust the entire object accordingly before updating the db with it
+    let wallet = this.state.wallet;
+    let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol;
+    let coinPrice = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price;
+    let coinAmount = this.state.transactionAmount / coinPrice;
+
+
+    // Checks if the user can afford the transaction
+    if ((coinAmount) > wallet[coinSymbol]) {
+      this.setState({ transactionStatus: "You don't have that many coins to sell!" });
+    }
+    else {
+      wallet.cash += Number(this.state.transactionAmount);
+      wallet[coinSymbol] -= Number(coinAmount);
+
+      if (wallet[coinSymbol] === 0) {
+        delete wallet[coinSymbol];
+      }
+
+      // TODO: Check if coinSymbol amount hits zero and remove it from wallet if so
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete
+
+      API.transaction(this.state.loginEmail, wallet)
+        // .then(res => console.log(res))
+        .catch(err => console.log(err));
+
+      // Updates the state of the wallet
+      this.setState({ wallet: wallet, transactionStatus: "Transaction complete!" });
+    };
+  };
+
+
+
+
   // Conditionally renders the coin menu/information once the crypto API information is loaded
   renderCoinMenu = () => {
+    // Defining coin-related variables
+    // Builds the URL to display the coin icon on the page
     let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol.toLowerCase();
     let iconURL = "https://unpkg.com/@icon/cryptocurrency-icons/icons/" + coinSymbol + ".svg";
     let coinName = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].name;
@@ -73,18 +165,6 @@ export default class Transactions extends Component {
   };
 
 
-  cryptoAPI() {
-    API.search()
-      .then(
-        res => {
-          // Puts initial response (object of objects) into an array so we can check it's length for rendering (similar to users)
-          this.setState({ cryptos: res.data.data })
-        }
-      )
-      .catch(err => console.log(err));
-  };
-
-
   render() {
 
     return (
@@ -92,7 +172,7 @@ export default class Transactions extends Component {
       <div className="container">
         <p className="text-center">Signed in as: {this.state.user}</p>
         {/* <p>{JSON.stringify(this.state.cryptos)}</p> */}
-        <p></p>
+        <p className="text-center">Cash: ${this.props.wallet.cash}</p>
 
 
         <h3 className="mt-3">Select the currency you'd like to buy:</h3>
@@ -103,10 +183,30 @@ export default class Transactions extends Component {
           </div>
         </div>
 
+        <div className="form-group">
+          <label className="col-2 col-form-label">Amount to trade:</label>
+          <div className="col-10">
+            <input
+              className="form-control"
+              id="transactionAmount"
+              type="number"
+              label="Transaction amount"
+              value={this.state.transactionAmount}
+              onChange={this.onTransactionChange}
+            />
+            <p>This amounts to {(this.state.transactionAmount / (this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price)).toFixed(5)} {this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].name}</p>
+          </div>
+        </div>
+
+        <br />
+        {/* Display whether transaction was successful (I think?) */}
+        <div id="transactionStatus">{this.state.transactionStatus}</div>
+
+        <button className="btn btn-primary" id="buyTransaction" onClick={this.buyTransaction}>Buy</button>
+        <button className="btn btn-danger" id="sellTransaction" onClick={this.sellTransaction}>Sell</button>
+
+        
       </div>
-
-
-
 
 
     );

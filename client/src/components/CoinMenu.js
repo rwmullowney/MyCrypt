@@ -24,9 +24,6 @@ class CoinMenu extends Component {
             <option value="1831">Bitcoin Cash</option>
             <option value="2010">Cardano</option>
           </select>
-
-          {/* <p>{coinName}</p> */}
-          {console.log(this.props.cryptos)}
         </div>
       );
     };

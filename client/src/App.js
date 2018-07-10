@@ -22,6 +22,7 @@ class App extends Component {
 
     this.state = {
       authUser: null,
+      wallet: {},
     };
   }
 
@@ -32,11 +33,13 @@ class App extends Component {
         : this.setState(() => ({ authUser: null }))
       console.log(this.state.authUser.email)
         ;
+        // Signs the user into their game account upon logging into Firebase
         this.userLogin();
     }
   );
   }
 
+  // Sees if the signed in user has an account in the DB and if not, creates the user
   userLogin = () => {
     API.userLogin(this.state.authUser.email)
       .then(res => {
@@ -45,11 +48,15 @@ class App extends Component {
         if(res.data === null){
           console.log("account not found");
           this.createUser();
-        };
+        }
+        else{
+          this.setState({wallet: res.data.wallet})
+        }
       })
       .catch(err => console.log(err))
   };
 
+  // Creates a new user in the database
     createUser = () => {
       console.log("creating account")
     API.createUser({
@@ -61,12 +68,12 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-
+// Renders the transactions page only if a user is signed in
   renderTransactions() {
     if (this.state.authUser) {
       // console.log("Signed in now")
       // console.log(this.state.authUser.email)
-      return (<Transactions user={this.state.authUser.email} />)
+      return (<Transactions user={this.state.authUser.email} wallet={this.state.wallet}/>)
     }
     else {
       return (
