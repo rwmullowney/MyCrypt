@@ -69,7 +69,7 @@ export default class Transactions extends Component {
     let wallet = this.props.wallet;
     let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol;
     let coinPrice = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price;
-    let coinAmount = this.state.transactionAmount / coinPrice;
+    let coinAmount = (this.state.transactionAmount / coinPrice).toFixed(5);
     console.log(wallet.cash)
     console.log(this.state.transactionAmount)
     console.log(coinAmount)
@@ -85,9 +85,9 @@ export default class Transactions extends Component {
 
       // Checks to see if the coin is in the user's wallet (i.e. not undefined).  If not it sets the coin amount to the transactionAmount.  Otherwise, it adds it.
       if (!wallet[coinSymbol]) {
-        wallet[coinSymbol] = coinAmount.toFixed(5)
+        wallet[coinSymbol] = coinAmount;
       }
-      else { wallet[coinSymbol] += coinAmount.toFixed(5) };
+      else { wallet[coinSymbol] += coinAmount };
 
       API.transaction(this.state.user, wallet)
         // .then(res => console.log(res))
@@ -104,34 +104,34 @@ export default class Transactions extends Component {
     console.log("selling")
 
     // Puts the state of the wallet in a variable so I can adjust the entire object accordingly before updating the db with it
-    let wallet = this.state.wallet;
+    let wallet = this.props.wallet;
     let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol;
     let coinPrice = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price;
-    let coinAmount = this.state.transactionAmount / coinPrice;
+    let coinAmount = (this.state.transactionAmount / coinPrice).toFixed(5);
 
 
-    // Checks if the user can afford the transaction
+    // Checks if the user has enough of a given coin to perform the transaction
     if ((coinAmount) > wallet[coinSymbol]) {
       this.setState({ transactionStatus: "You don't have that many coins to sell!" });
     }
     else {
       wallet.cash += Number(this.state.transactionAmount);
-      wallet[coinSymbol] -= Number(coinAmount);
+      wallet[coinSymbol] -= coinAmount;
 
-      if (wallet[coinSymbol] === 0) {
+      // A transaction resulted in BTC showing as null in the wallet so I'm hoping this works around that 
+      // (it allowed me to sell 0.24447 when there was only 0.2444 or something to that effect)
+      if (wallet[coinSymbol] === 0 || wallet[coinSymbol] === null) {
         delete wallet[coinSymbol];
       }
 
-      // TODO: Check if coinSymbol amount hits zero and remove it from wallet if so
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete
-
-      API.transaction(this.state.loginEmail, wallet)
+      API.transaction(this.state.user, wallet)
         // .then(res => console.log(res))
         .catch(err => console.log(err));
 
       // Updates the state of the wallet
       this.setState({ wallet: wallet, transactionStatus: "Transaction complete!" });
     };
+
   };
 
 

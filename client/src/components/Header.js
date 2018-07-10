@@ -25,7 +25,7 @@ var removeListBullet = {
 
 const Header = ({ authUser }) =>
   <div className="container justify-content-center mt-3 header">
-    <h1 className="text-center" style={textStyle}>Crypto Transactions</h1>
+    <h1 className="text-center" style={textStyle}>MyCrypto</h1>
 
     <hr />
     <div>
