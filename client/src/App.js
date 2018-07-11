@@ -56,6 +56,7 @@ class App extends Component {
       .catch(err => console.log(err))
   };
 
+<<<<<<< HEAD
   // Creates a new user in the database
     createUser = () => {
       console.log("creating account")
@@ -85,6 +86,18 @@ class App extends Component {
   }
 
 
+=======
+  // renderTransactions() {
+  //   if(this.state.authUser){
+  //     console.log("Signed in now")
+  //     console.log(this.state.authUser.email)
+  //     return (<Transactions user={this.state.authUser.email} />)
+
+  //   }
+  // }
+
+
+>>>>>>> emit
 
 
   render() {
