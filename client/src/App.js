@@ -7,8 +7,14 @@ import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Transactions from './components/Transactions';
 
+import API from "./utils/API"
+
 import * as routes from './constants/routes';
 import { firebase } from './firebase';
+
+let newWallet = {
+  cash: 10000
+}
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +22,7 @@ class App extends Component {
 
     this.state = {
       authUser: null,
+      wallet: {},
     };
   }
 
@@ -26,21 +33,58 @@ class App extends Component {
         : this.setState(() => ({ authUser: null }))
       console.log(this.state.authUser.email)
         ;
-    });
+        // Signs the user into their game account upon logging into Firebase
+        this.userLogin();
+    }
+  );
+  }
+
+  // Sees if the signed in user has an account in the DB and if not, creates the user
+  userLogin = () => {
+    API.userLogin(this.state.authUser.email)
+      .then(res => {
+        console.log("signing in");
+        console.log(res.data);
+        if(res.data === null){
+          console.log("account not found");
+          this.createUser();
+        }
+        else{
+          this.setState({wallet: res.data.wallet})
+        }
+      })
+      .catch(err => console.log(err))
+  };
+
+  // Creates a new user in the database
+    createUser = () => {
+      console.log("creating account")
+    API.createUser({
+      userName: "test user",
+      userEmail: this.state.authUser.email,
+      wallet: newWallet
+    })
+      .then(res => this.loadUsers)
+      .catch(err => console.log(err));
+  }
+
+// Renders the transactions page only if a user is signed in
+  renderTransactions() {
+    if (this.state.authUser) {
+      // console.log("Signed in now")
+      // console.log(this.state.authUser.email)
+      return (<Transactions user={this.state.authUser.email} wallet={this.state.wallet}/>)
+    }
+    else {
+      return (
+        <div className="container">
+          <p className="text-center">You must be signed in to view this page!</p>
+        </div>
+      )
+    }
   }
 
 
-
-  
-
-  // renderTransactions() {
-  //   if(this.state.authUser){
-  //     console.log("Signed in now")
-  //     console.log(this.state.authUser.email)
-  //     return (<Transactions user={this.state.authUser.email} />)
-
-  //   }
-  // 
 
 
   render() {
@@ -66,7 +110,7 @@ class App extends Component {
           <Route
             exact path={routes.TRANSACTIONS}
             component={() =>
-              <Transactions user={this.state.authUser.email} />
+              this.renderTransactions()
             }
           />
 

@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 
 class CoinMenu extends Component {
 
+
     render() {
+      // let coinName = coinName = this.props.cryptos && this.props.cryptos[this.props.cryptoValue] && this.props.cryptos[this.props.cryptoValue].name
+
       return (
         <div>
           {/* {JSON.stringify(this.props.props.cryptos[1])} */}
