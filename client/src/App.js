@@ -30,9 +30,6 @@ class App extends Component {
   }
 
 
-
-  
-
   // renderTransactions() {
   //   if(this.state.authUser){
   //     console.log("Signed in now")
@@ -40,7 +37,9 @@ class App extends Component {
   //     return (<Transactions user={this.state.authUser.email} />)
 
   //   }
-  // 
+  // }
+
+
 
 
   render() {

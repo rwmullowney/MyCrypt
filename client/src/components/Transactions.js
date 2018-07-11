@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CoinMenu from "./CoinMenu";
+import CoinMenu from "./coinmenu";
 
 
 
