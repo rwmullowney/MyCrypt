@@ -9,18 +9,19 @@ export default class Wallet extends Component {
   state = {
     user: '',
     wallet: {},
-    cryptos: []
+    cryptos: [],
+    cryptosOwned: [],
   };
 
   constructor(props) {
     super(props);
     this.state.user = this.props.user;
     this.state.wallet = this.props.wallet;
+    console.log(this.state.wallet)
   }
 
   componentDidMount = () => {
     this.cryptoAPI();
-    this.grabUserCoins();
   };
 
 
@@ -30,15 +31,36 @@ export default class Wallet extends Component {
         res => {
           // Puts initial response (object of objects) into an array so we can check it's length for rendering (similar to users)
           this.setState({ cryptos: res.data.data });
+          this.grabUserCoins();
           console.log(this.state.cryptos);
         })
       .catch(err => console.log(err));
   };
 
+
   grabUserCoins = () => {
     let wallet = this.state.wallet;
-    for (var item in wallet) {
-      if (item !== "cash") cryptosOwned.push(item);
+    for (var coinSymbol in wallet) {
+
+
+      if (coinSymbol !== "cash") {
+
+        // Convert to coinID based on the symbol of the coin in the wallet
+        if (coinSymbol === "BTC") { coinSymbol = 1 }
+        else if (coinSymbol === "LTC") { coinSymbol = 2 }
+        else if (coinSymbol === "XRP") { coinSymbol = 52 }
+        else if (coinSymbol === "XLM") { coinSymbol = 512 }
+        else if (coinSymbol === "USDT") { coinSymbol = 825 }
+        else if (coinSymbol === "ETH") { coinSymbol = 1027 }
+        else if (coinSymbol === "MIOTA") { coinSymbol = 1720 }
+        else if (coinSymbol === "EOS") { coinSymbol = 1765 }
+        else if (coinSymbol === "BCH") { coinSymbol = 1831 }
+        else if (coinSymbol === "ADA") { coinSymbol = 2010 };
+        
+        // Send the converted coinID to the array
+        cryptosOwned.push(coinSymbol)
+      }
+      
     };
     console.log(cryptosOwned);
   };
