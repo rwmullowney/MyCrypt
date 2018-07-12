@@ -62,7 +62,8 @@ export default class Wallet extends Component {
       }
       
     };
-    console.log(cryptosOwned);
+    this.setState({cryptosOwned: cryptosOwned});
+    console.log(this.state.cryptosOwned)
   };
 
 
