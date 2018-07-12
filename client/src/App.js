@@ -6,6 +6,7 @@ import Landing from './components/Landing';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Transactions from './components/Transactions';
+import Wallet from "./components/Wallet";
 
 import API from "./utils/API"
 
@@ -23,42 +24,59 @@ class App extends Component {
     this.state = {
       authUser: null,
       wallet: {},
+      // cryptos: []
     };
   }
+
 
   componentDidMount() {
     firebase.auth.onAuthStateChanged(authUser => {
       authUser
         ? this.setState(() => ({ authUser }))
         : this.setState(() => ({ authUser: null }))
-      console.log(this.state.authUser.email)
+      // console.log(this.state.authUser.email)
         ;
-        // Signs the user into their game account upon logging into Firebase
-        this.userLogin();
-    }
-  );
+      // Signs the user into their game account upon logging into Firebase
+      this.userLogin();
+    });
   }
+
+
+  // https://github.com/facebook/react/issues/5591
+  // https://github.com/facebook/react/issues/5591
+  // https://github.com/facebook/react/issues/5591
+  // cryptoAPI = () => {
+  //   API.search()
+  //     .then(
+  //       res => {
+  //         // Puts initial response (object of objects) into an array so we can check it's length for rendering (similar to users)
+  //         this.setState({ cryptos: res.data.data })
+  //       }
+  //     )
+  //     .catch(err => console.log(err));
+  // };
+
 
   // Sees if the signed in user has an account in the DB and if not, creates the user
   userLogin = () => {
     API.userLogin(this.state.authUser.email)
       .then(res => {
         console.log("signing in");
-        console.log(res.data);
-        if(res.data === null){
+        // console.log(res.data);
+        if (res.data === null) {
           console.log("account not found");
           this.createUser();
         }
-        else{
-          this.setState({wallet: res.data.wallet})
+        else {
+          this.setState({ wallet: res.data.wallet })
         }
       })
       .catch(err => console.log(err))
   };
 
   // Creates a new user in the database
-    createUser = () => {
-      console.log("creating account")
+  createUser = () => {
+    console.log("creating account")
     API.createUser({
       userName: "test user",
       userEmail: this.state.authUser.email,
@@ -68,12 +86,31 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-// Renders the transactions page only if a user is signed in
+
+  // Renders the transactions page only if a user is signed in
   renderTransactions() {
     if (this.state.authUser) {
       // console.log("Signed in now")
       // console.log(this.state.authUser.email)
-      return (<Transactions user={this.state.authUser.email} wallet={this.state.wallet}/>)
+      // this.cryptoAPI()
+      return (<Transactions user={this.state.authUser.email} wallet={this.state.wallet} />)
+    }
+    else {
+      return (
+        <div className="container">
+          <p className="text-center">You must be signed in to view this page!</p>
+        </div>
+      )
+    }
+  }
+
+
+  renderWallet() {
+    if (this.state.authUser) {
+      // console.log("Signed in now")
+      // console.log(this.state.authUser.email)
+      // this.cryptoAPI()
+      return (<Wallet user={this.state.authUser.email} wallet={this.state.wallet} />)
     }
     else {
       return (
@@ -111,6 +148,12 @@ class App extends Component {
             exact path={routes.TRANSACTIONS}
             component={() =>
               this.renderTransactions()
+            }
+          />
+          <Route
+            exact path={routes.WALLET}
+            component={() =>
+              this.renderWallet()
             }
           />
 
