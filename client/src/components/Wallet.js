@@ -6,11 +6,10 @@ let cardStyle = {
   maxHeight: "225px",
   maxWidth: "300px"
 };
-
 let arrowStyle = {
   maxHeight: "18px",
   maxWidth: "18px"
-}
+};
 
 
 export default class Wallet extends Component {
