@@ -104,13 +104,16 @@ export default class Wallet extends Component {
 
 
   renderCards = () => {
+    // let coinCards = this.refs.coinCards;
+    // coinCards.remove();
+
     return this.state.cryptosOwned.map((item) => {
       let percentChangeHr = String(this.state.cryptos[item].quotes.USD.percent_change_1h)
       let percentChangeDay = String(this.state.cryptos[item].quotes.USD.percent_change_24h)
       let percentChangeWeek = String(this.state.cryptos[item].quotes.USD.percent_change_7d)
 
       return (
-        <div>
+        <div ref="coinCards">
           <div className="card m-2" style={cardStyle}>
             <div className="card-body" id="${item}">
               <h4 className="font-weight-light">{this.state.cryptos[item].name} - ${this.state.cryptos[item].quotes.USD.price} </h4>
@@ -118,9 +121,9 @@ export default class Wallet extends Component {
               <h5 className="font-weight-light">Recent performance:</h5>
               <h6 className="font-weight-light">1 Hour: ${this.arrowType(percentChangeHr)} ${percentChangeHr}%
               <br />
-              1 Day: ${this.arrowType(percentChangeDay)} ${percentChangeDay}%
+                1 Day: ${this.arrowType(percentChangeDay)} ${percentChangeDay}%
               <br />
-              1 Week: ${this.arrowType(percentChangeWeek)} ${percentChangeWeek}%</h6>
+                1 Week: ${this.arrowType(percentChangeWeek)} ${percentChangeWeek}%</h6>
             </div>
           </div>
         </div>
@@ -137,11 +140,15 @@ export default class Wallet extends Component {
     return (
       <div className="container">
         {/* { this.props.children } */}
-        <h3>Your Wallet</h3>
-        <p>{this.state.wallet.cash}</p>
-        <p>{this.state.cryptos && this.state.cryptos[512] && this.state.cryptos[512].symbol}</p>
-
-        {this.renderCards()}
+        <div className="text-center">
+          <h2>Your Wallet</h2>
+          <br />
+          <h4>Cash: ${this.state.wallet.cash}</h4>
+          {/* <p>{this.state.cryptos && this.state.cryptos[512] && this.state.cryptos[512].symbol}</p> */}
+        </div>
+        <div className="row justify-content-center">
+          {this.renderCards()}
+        </div>
       </div>
     )
   }
