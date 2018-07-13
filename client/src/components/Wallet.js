@@ -16,7 +16,7 @@ let arrowStyle = {
   maxWidth: "18px"
 }
 
-let coinAmounts = [];
+
 
 
 export default class Wallet extends Component {
@@ -60,6 +60,8 @@ export default class Wallet extends Component {
 
     // Reset the cryptosOwned array so it doesn't stack on each additional component load
     let cryptosOwned = [];
+    let coinAmounts = [];
+    
     let wallet = this.state.wallet;
     for (var coinSymbol in wallet) {
       if (coinSymbol !== "cash") {
