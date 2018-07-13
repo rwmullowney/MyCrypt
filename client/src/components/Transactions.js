@@ -4,26 +4,22 @@ import CoinMenu from "./coinmenu";
 import API from "../utils/API";
 
 
-var BackgroundImage = React.createClass({
-  componentWillMount:function(){
-    var w = window,
-    d = document,
-    e = d.documentElement,
-    g = d.getElementsByTagName('body')[0],
-    x = w.innerWidth || e.clientWidth || g.clientWidth,
-    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
-    
-    this.setState({x:x,y:y});
-  },
-  render:function(){
-    return (<div><img className='bg' src={'https://source.unsplash.com/'+this.state.x+'x'+this.state.y+'/?nature'} /></div>)
-  }  
-});
+import Background from '../components/img/background.png';
 
-ReactDOM.render(
-  <BackgroundImage/>,
-  document.getElementById('app')
-);
+var sectionStyle = {
+ width: "100%",
+ height: "400px",
+ backgroundImage: `url(${Background})`
+};
+
+class Section extends Component {
+ render() {
+   return (
+     <section style={ sectionStyle }>
+     </section>
+   );
+ }
+}
 
 export default class Transactions extends Component {
 
