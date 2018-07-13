@@ -3,7 +3,7 @@ import API from "../utils/API"
 
 
 let cardStyle = {
-  maxHeight: "200px",
+  maxHeight: "225px",
   maxWidth: "300px"
 };
 
@@ -124,7 +124,8 @@ export default class Wallet extends Component {
   renderCards = () => {
     // let coinCards = this.refs.coinCards;
     // coinCards.remove();
-
+    let index = 0
+    console.log(this.state.wallet)
     return this.state.cryptosOwned.map((item) => {
       let percentChangeHr = String(this.state.cryptos[item].quotes.USD.percent_change_1h);
       let percentChangeDay = String(this.state.cryptos[item].quotes.USD.percent_change_24h);
@@ -134,7 +135,8 @@ export default class Wallet extends Component {
         <div ref="coinCards">
           <div className="card m-2" style={cardStyle}>
             <div className="card-body" id="${item}">
-              <h4 className="font-weight-light">{this.state.cryptos[item].name} - ${this.state.cryptos[item].quotes.USD.price} </h4>
+              <h4 className="font-weight-light">{this.state.cryptos[item].symbol} - ${this.state.cryptos[item].quotes.USD.price} </h4>
+              <h5 className="font-weight-light">Owned: {this.state.wallet[this.state.cryptos[item].symbol]}</h5>
               <hr />
               <h5 className="font-weight-light">Recent performance:</h5>
               <h6 className="font-weight-light">1 Hour: {this.arrowType(percentChangeHr)} {percentChangeHr}%
@@ -148,8 +150,6 @@ export default class Wallet extends Component {
       );
     });
   };
-
-
 
 
   render() {
