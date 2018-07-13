@@ -82,13 +82,16 @@ export default class Transactions extends Component {
     // Allows the transaction if the user can afford it
     else {
       wallet.cash -= Number(this.state.transactionAmount);
+      wallet.cash = wallet.cash.toFixed(2);
 
       // Checks to see if the coin is in the user's wallet (i.e. not undefined).  If not it sets the coin amount to the transactionAmount.  Otherwise, it adds it.
       if (!wallet[coinSymbol]) {
-        wallet[coinSymbol] = coinAmount;
+        wallet[coinSymbol] = Number(coinAmount);
       }
-      else { wallet[coinSymbol] += coinAmount };
+      else { wallet[coinSymbol] += Number(coinAmount) };
 
+      console.log("Buying...")
+      console.log(wallet)
       API.transaction(this.state.user, wallet)
         // .then(res => console.log(res))
         .catch(err => console.log(err));
@@ -115,8 +118,12 @@ export default class Transactions extends Component {
       this.setState({ transactionStatus: "You don't have that many coins to sell!" });
     }
     else {
+      wallet.cash = Number(wallet.cash)
       wallet.cash += Number(this.state.transactionAmount);
-      wallet[coinSymbol] = (wallet[coinSymbol] - coinAmount).toFixed(5);
+      wallet.cash = wallet.cash.toFixed(2);
+
+      wallet[coinSymbol] = Number(wallet[coinSymbol] - coinAmount).toFixed(5);
+      console.log(wallet.cash)
       console.log(wallet[coinSymbol])
 
       // A transaction resulted in BTC showing as null in the wallet so I'm hoping this works around that 
@@ -124,6 +131,9 @@ export default class Transactions extends Component {
       if (wallet[coinSymbol] === 0 || wallet[coinSymbol] === null) {
         delete wallet[coinSymbol];
       }
+
+      console.log("Selling...")
+      console.log(wallet)
 
       API.transaction(this.state.user, wallet)
         // .then(res => console.log(res))
@@ -206,7 +216,7 @@ export default class Transactions extends Component {
         <button className="btn btn-primary" id="buyTransaction" onClick={this.buyTransaction}>Buy</button>
         <button className="btn btn-danger" id="sellTransaction" onClick={this.sellTransaction}>Sell</button>
 
-        
+
       </div>
 
 

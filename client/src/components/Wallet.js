@@ -92,7 +92,7 @@ export default class Wallet extends Component {
   netWorth = () => {
 
     // Set base netWorth as the user's cash amount
-    let netWorth = this.state.wallet.cash;
+    let netWorth = Number(this.state.wallet.cash);
 
     // Adds the value of the user's coins
     for (let i = 0; i < this.state.cryptosOwned.length; i++) {
