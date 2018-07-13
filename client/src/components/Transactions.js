@@ -1,12 +1,32 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
 import CoinMenu from "./coinmenu";
+import API from "../utils/API";
 
 
+var BackgroundImage = React.createClass({
+  componentWillMount:function(){
+    var w = window,
+    d = document,
+    e = d.documentElement,
+    g = d.getElementsByTagName('body')[0],
+    x = w.innerWidth || e.clientWidth || g.clientWidth,
+    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+    
+    this.setState({x:x,y:y});
+  },
+  render:function(){
+    return (<div><img className='bg' src={'https://source.unsplash.com/'+this.state.x+'x'+this.state.y+'/?nature'} /></div>)
+  }  
+});
 
-
-
+ReactDOM.render(
+  <BackgroundImage/>,
+  document.getElementById('app')
+);
 
 export default class Transactions extends Component {
+
 
 
 
@@ -175,7 +195,7 @@ export default class Transactions extends Component {
 
 
         <h3 className="mt-3">Select the currency you'd like to buy:</h3>
-        <div className="col-6">
+        <div className="col-3">
           <div className="form-group">
             <label >Currencies:</label>
             {this.renderCoinMenu()}
@@ -184,7 +204,7 @@ export default class Transactions extends Component {
 
         <div className="form-group">
           <label className="col-2 col-form-label">Amount to trade:</label>
-          <div className="col-10">
+          <div className="col-3">
             <input
               className="form-control"
               id="transactionAmount"
@@ -211,23 +231,6 @@ export default class Transactions extends Component {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

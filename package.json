@@ -22,8 +22,12 @@
   "dependencies": {
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
+    "create-react-class": "^15.6.3",
     "express": "^4.15.4",
     "if-env": "^1.0.4",
-    "mongoose": "^5.0.17"
+    "image-webpack-loader": "^4.3.1",
+    "mongoose": "^5.0.17",
+    "react": "^16.4.1",
+    "webpack": "^4.16.0"
   }
 }

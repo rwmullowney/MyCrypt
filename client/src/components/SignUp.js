@@ -30,7 +30,7 @@ class SignUpForm extends Component {
 
   onSubmit = (event) => {
     const {
-      username,
+      // username,
       email,
       passwordOne,
     } = this.state;
