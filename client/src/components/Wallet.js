@@ -7,16 +7,10 @@ let cardStyle = {
   maxWidth: "300px"
 };
 
-let lineStyle = {
-  maxWidth: "750px"
-};
-
 let arrowStyle = {
   maxHeight: "18px",
   maxWidth: "18px"
 }
-
-
 
 
 export default class Wallet extends Component {
@@ -42,6 +36,7 @@ export default class Wallet extends Component {
   };
 
 
+  // Grabs cryptocurrency information from the API
   cryptoAPI = () => {
     API.search()
       .then(
@@ -61,7 +56,7 @@ export default class Wallet extends Component {
     // Reset the cryptosOwned array so it doesn't stack on each additional component load
     let cryptosOwned = [];
     let coinAmounts = [];
-    
+
     let wallet = this.state.wallet;
     for (var coinSymbol in wallet) {
       if (coinSymbol !== "cash") {
@@ -99,11 +94,12 @@ export default class Wallet extends Component {
     // Set base netWorth as the user's cash amount
     let netWorth = this.state.wallet.cash;
 
+    // Adds the value of the user's coins
     for (let i = 0; i < this.state.cryptosOwned.length; i++) {
       netWorth += (this.state.cryptos[this.state.cryptosOwned[i]].quotes.USD.price * this.state.coinAmounts[i]);
-    };    
-    
-    this.setState({netWorth: netWorth.toFixed(2)})
+    };
+
+    this.setState({ netWorth: netWorth.toFixed(2) })
   };
 
 
@@ -114,23 +110,17 @@ export default class Wallet extends Component {
 
   // Function to determine if the percent change is positive or negative, and assigns the green or red arrow accordingly
   arrowType = (percentChange) => {
-
-    // let arrow = "";
     if (percentChange[0] === "-") {
-      // arrow += negativeArrow
       return <img className="ml-2" style={arrowStyle} src={require("../assets/images/redArrow.png")} alt="A red, downward-facing arrow" />
     }
     else {
-      // arrow += positiveArrow
       return <img className="ml-2" style={arrowStyle} src={require("../assets/images/greenArrow.png")} alt="A green, upward-facing arrow" />
-    }
-  }
+    };
+  };
 
 
+  // Generates the cards and renders them on the page
   renderCards = () => {
-    // let coinCards = this.refs.coinCards;
-    // coinCards.remove();
-    // console.log(this.state.wallet)
 
     return this.state.cryptosOwned.map((item) => {
       let percentChangeHr = String(this.state.cryptos[item].quotes.USD.percent_change_1h);

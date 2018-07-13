@@ -111,12 +111,13 @@ export default class Transactions extends Component {
 
 
     // Checks if the user has enough of a given coin to perform the transaction
-    if ((coinAmount) > wallet[coinSymbol]) {
+    if (!wallet[coinSymbol] || (coinAmount) > wallet[coinSymbol]) {
       this.setState({ transactionStatus: "You don't have that many coins to sell!" });
     }
     else {
       wallet.cash += Number(this.state.transactionAmount);
-      wallet[coinSymbol] -= coinAmount;
+      wallet[coinSymbol] = (wallet[coinSymbol] - coinAmount).toFixed(5);
+      console.log(wallet[coinSymbol])
 
       // A transaction resulted in BTC showing as null in the wallet so I'm hoping this works around that 
       // (it allowed me to sell 0.24447 when there was only 0.2444 or something to that effect)
