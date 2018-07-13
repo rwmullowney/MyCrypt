@@ -66,7 +66,7 @@ export default class Transactions extends Component {
   // API/DB Functions
   // ==============================================
 
-  cryptoAPI() {
+  cryptoAPI = () => {
     API.search()
       .then(
         res => {
