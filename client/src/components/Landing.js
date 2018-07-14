@@ -17,7 +17,7 @@ export default class Landing extends Component {
     return (
       <div style={rootStyle}>
       <div className="landing">
-      <div className="col-5">
+      <div className="col-0">
       <h2>Welcome to MyCrypto! Your digital wallet and monitor</h2>
         {/* { this.props.children } */}
       </div>

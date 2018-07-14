@@ -19,7 +19,7 @@ var removeListBullet = {
 var rootStyle = {
   backgroundColor : 'black',
   color : 'white',
-  height : '100vh' 
+  // height : '100vh' 
 }
 
 // Dummy wallet for populating newly created users with currency
@@ -28,6 +28,7 @@ var rootStyle = {
 
 
 const Header = ({ authUser }) =>
+<div style={rootStyle}>
   <div className="container justify-content-center mt-3 header">
     <h1 className="text-center" style={textStyle}>My Crypto</h1>
 
@@ -39,6 +40,7 @@ const Header = ({ authUser }) =>
       }
     </div>
   </div>
+  </div>
 
 
 // Determine what links to show depending on whether the user is signed in
@@ -46,7 +48,7 @@ const HeaderAuth = () =>
   <ul>
     <div className="row justify-content-center">
       <li className="mx-5" style={removeListBullet}><Link to={routes.HOME}>Home</Link></li>
-      <li className="mx-5" style={removeListBullet}><Link to={routes.LANDING}>Landing</Link></li>
+      <li className="mx-5" style={removeListBullet}><Link to={routes.LANDING}>Guide</Link></li>
       <li className="mx-5" style={removeListBullet}><Link to={routes.ACCOUNT}>Account</Link></li>
       <li className="mx-5" style={removeListBullet}><Link to={routes.TRANSACTIONS}>Transactions</Link></li>
       <li className="mx-5" style={removeListBullet}><Link to={routes.WALLET}>Wallet</Link></li>
@@ -57,7 +59,7 @@ const HeaderAuth = () =>
 const HeaderNonAuth = () =>
   <ul>
     <div className="row justify-content-center">
-      <li className="mx-5" style={removeListBullet}><Link to={routes.LANDING}>Landing</Link></li>
+      <li className="mx-5" style={removeListBullet}><Link to={routes.LANDING}>Guide</Link></li>
       <li className="mx-5" style={removeListBullet}><Link to={routes.SIGN_IN}>Sign In</Link></li>
     </div>
   </ul>

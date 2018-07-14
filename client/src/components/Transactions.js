@@ -6,6 +6,12 @@ import API from "../utils/API";
 
 import Background from '../components/img/background.png';
 
+var rootStyle = {
+  backgroundColor : 'black',
+  color : 'white',
+  height : '100vh' 
+}
+
 
 export default class Transactions extends Component {
 
