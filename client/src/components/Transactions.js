@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CoinMenu from "./coinmenu";
+import API from "../utils/API";
 
 
 
