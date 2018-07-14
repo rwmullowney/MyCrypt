@@ -61,7 +61,7 @@ export default class Header extends Component {
     return (
       
       <div className="container justify-content-center mt-3 header">
-        <h1 className="text-center" style={textStyle}>Crypto Transactions</h1>
+        <h1 className="text-center" style={textStyle}>My Crypto</h1>
 
         <hr />
 

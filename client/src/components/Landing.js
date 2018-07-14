@@ -6,22 +6,20 @@ let sectionStyle = {
   backgroundImage: `url(${Background})`
 };
 
+
+
 export default class Landing extends Component {
 
   render() {
 
-    // {
-    //   return (
-    //     <section style={ sectionStyle }>
-    //     </section>
-    //   );
-    // }
 
     return (
+    <section style={sectionStyle}>
       <div className="landing">
       <h1>Landing page</h1>
         {/* { this.props.children } */}
-      </div>
+      </div>  
+    </section>
     )
   }
 }

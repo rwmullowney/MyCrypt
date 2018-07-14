@@ -6,10 +6,12 @@ import API from "../utils/API";
 
 import Background from '../components/img/background.png';
 
-var sectionStyle = {
+// var Background = require('../components/img/background.png')
+
+var style = {
   width: "100%",
-  height: "200px",
-  backgroundImage: "url(" + { Background } + ")"
+  backgroundImage: `url(${Background})`
+
 };
 
 export default class Transactions extends Component {
@@ -182,8 +184,8 @@ export default class Transactions extends Component {
 
   render() {
   
-    // <section style={sectionStyle}
-    
+
+
     return (
       
       <div className="container">

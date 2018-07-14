@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { SignUpLink } from './SignUp';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
+import Background from '../components/img/background.png';
 
 const SignInPage = ({ history }) =>
   <div>
