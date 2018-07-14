@@ -164,17 +164,18 @@ export default class Wallet extends Component {
     return (
       <div style={rootStyle}>  
       < div className="container">
+      <div className="row">
       <div className="col-12 text-center">
       <h1 className="text-center"></h1>
           <h1>Your Wallet</h1>
+      </div>
 
           <div className="row">
-          <div class="column-4">
-          <h3 className="font-weight-heavy">Net Worth: ${this.state.netWorth}</h3>
-          <div class="column-4">
+          <div className="col-12 text-center">
           <h4 className="font-weight-light">Cash: ${this.state.wallet.cash}</h4>
-          {/* <hr className="text-center mx-5" align="center" width="50%" /> */}
-          <div class="column-4">
+          <div class="column-12">
+          <h3 className="font-weight-heavy">Net Worth: ${this.state.netWorth}</h3>
+          <div class="column-12">
           <h4 className="mt-4 font-weight-light">Coins Owned</h4>
           </div>
           </div>

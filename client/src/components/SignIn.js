@@ -1,9 +1,29 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-
+import Background from '../components/img/background.png';
 import { SignUpLink } from './SignUp';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
+
+var sectionStyle = {
+  width: "100%",
+  backgroundImage: "url(" + Background + ")"
+};
+
+var rootStyle = {
+  backgroundColor : 'black',
+  color : 'white',
+  // height : '100vh' 
+}
+
+class Section extends Component {
+  render() {
+    return (
+      <section style={ sectionStyle }>
+      </section>
+    );
+  }
+}
 
 const SignInPage = ({ history }) =>
   <div>

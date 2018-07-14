@@ -49,7 +49,7 @@ const HeaderAuth = () =>
     <div className="row justify-content-center">
       <li className="mx-5" style={removeListBullet}><Link to={routes.HOME}>Home</Link></li>
       <li className="mx-5" style={removeListBullet}><Link to={routes.LANDING}>Guide</Link></li>
-      <li className="mx-5" style={removeListBullet}><Link to={routes.ACCOUNT}>Account</Link></li>
+      {/* <li className="mx-5" style={removeListBullet}><Link to={routes.ACCOUNT}>Account</Link></li> */}
       <li className="mx-5" style={removeListBullet}><Link to={routes.TRANSACTIONS}>Transactions</Link></li>
       <li className="mx-5" style={removeListBullet}><Link to={routes.WALLET}>Wallet</Link></li>
       <li className="mx-5" style={removeListBullet}><SignOutButton /></li>
