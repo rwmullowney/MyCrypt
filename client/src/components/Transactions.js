@@ -86,13 +86,16 @@ export default class Transactions extends Component {
     // Allows the transaction if the user can afford it
     else {
       wallet.cash -= Number(this.state.transactionAmount);
+      wallet.cash = wallet.cash.toFixed(2);
 
       // Checks to see if the coin is in the user's wallet (i.e. not undefined).  If not it sets the coin amount to the transactionAmount.  Otherwise, it adds it.
       if (!wallet[coinSymbol]) {
-        wallet[coinSymbol] = coinAmount;
+        wallet[coinSymbol] = Number(coinAmount);
       }
-      else { wallet[coinSymbol] += coinAmount };
+      else { wallet[coinSymbol] += Number(coinAmount) };
 
+      console.log("Buying...")
+      console.log(wallet)
       API.transaction(this.state.user, wallet)
         // .then(res => console.log(res))
         .catch(err => console.log(err));
@@ -115,18 +118,26 @@ export default class Transactions extends Component {
 
 
     // Checks if the user has enough of a given coin to perform the transaction
-    if ((coinAmount) > wallet[coinSymbol]) {
+    if (!wallet[coinSymbol] || (coinAmount) > wallet[coinSymbol]) {
       this.setState({ transactionStatus: "You don't have that many coins to sell!" });
     }
     else {
+      wallet.cash = Number(wallet.cash)
       wallet.cash += Number(this.state.transactionAmount);
-      wallet[coinSymbol] -= coinAmount;
+      wallet.cash = wallet.cash.toFixed(2);
+
+      wallet[coinSymbol] = Number(wallet[coinSymbol] - coinAmount).toFixed(5);
+      console.log(wallet.cash)
+      console.log(wallet[coinSymbol])
 
       // A transaction resulted in BTC showing as null in the wallet so I'm hoping this works around that 
       // (it allowed me to sell 0.24447 when there was only 0.2444 or something to that effect)
       if (wallet[coinSymbol] === 0 || wallet[coinSymbol] === null) {
         delete wallet[coinSymbol];
       }
+
+      console.log("Selling...")
+      console.log(wallet)
 
       API.transaction(this.state.user, wallet)
         // .then(res => console.log(res))
@@ -211,123 +222,10 @@ export default class Transactions extends Component {
         <button className="btn btn-primary" id="buyTransaction" onClick={this.buyTransaction}>Buy</button>
         <button className="btn btn-danger" id="sellTransaction" onClick={this.sellTransaction}>Sell</button>
 
-        
+
       </div>
 
 
     );
-  }
-}
-
-
-
-
-const pastTransactions = props => {
-  // debugger;
-  // console.log(props.cryptos)
-
-  // let userWallet = JSON.parse(props.signedIn.userWallet);
-  // console.log(props.userWallet)
-
-
-  return (
-    <div className="transactions">
-
-      {/* {console.log(props)} */}
-      {/* Tests that we can grab user data from the database */}
-      <br />
-      {/* https://stackoverflow.com/questions/17159295/accessing-object-with-key-as-number-php */}
-      {/* {props.users[0].wallet.cash} */}
-      {/* {console.log(props.cryptos[props.value])} */}
-
-      {/* <div className="container"> */}
-      {/* {{!-- Sign in as a select user email --}} */}
-      {/* <div className="form-group">
-          <label className="col-2 col-form-label">User ID Login</label>
-          <div className="col-10">
-            <input
-              className="form-control"
-              id="loginEmail"
-              type="email"
-              label="Email address"
-              placeholder="Enter email"
-              value={props.loginEmail}
-              onChange={props.onLoginChange}
-            />
-          </div>
-        </div>
-        <div id="showLogin"></div>
-        <button className="btn btn-success" id="userLogin" onClick={props.userLogin}>Login</button> */}
-
-
-
-      <h6>Signed in as:</h6>
-      {/* <p>Username: {props.signedIn.userName}</p>
-        <p>Email: {props.signedIn.userEmail}</p>
-        <p>Wallet cash: {props.userWallet.cash}</p> */}
-
-
-      {/* Create a new user */}
-      {/* <div className="form-group">
-          <label className="col-2 col-form-label">Create Account</label>
-          <div className="col-10">
-            <input
-              className="form-control"
-              id="createEmail"
-              type="email"
-              label="Email address"
-              placeholder="Enter email"
-              // value={props.createEmail}
-              // onChange={props.onEmailChange}
-            />
-          </div>
-        </div>
-        <button className="btn btn-success" id="submitEmail" onClick={props.createUser}>Create user</button> */}
-
-
-      {/* {console.log(props)}
-        {console.log(props.symbol)} */}
-
-
-      {/* <div id="coinIcon"><img height="32" width="32" src={iconURL} /></div>
-        <div id="coinName">{coinName}</div>
-        <div id="coinPrice">${coinPrice}</div> */}
-
-      <div className="form-group">
-        <label className="col-2 col-form-label">Amount to trade:</label>
-        <div className="col-10">
-          <input
-            className="form-control"
-            id="transactionAmount"
-            type="number"
-            label="Transaction amount"
-          // value={props.transactionAmount}
-          // onChange={props.onTransactionChange}
-          />
-          {/* <p>This amounts to {(props.transactionAmount / coinPrice).toFixed(5)} {coinName}</p> */}
-        </div>
-      </div>
-
-      <button className="btn btn-primary" id="buyTransaction" onClick={props.buyTransaction}>Buy</button>
-      <button className="btn btn-danger" id="sellTransaction" onClick={props.sellTransaction}>Sell</button>
-
-      <br />
-      {/* Display whether transaction was successful (I think?) */}
-      <div id="transactionStatus">{props.transactionStatus}</div>
-
-
-      <hr />
-
-      <h3>This user's transactions:</h3>
-      <div id="userTransacations"></div>
-      <br />
-
-      <h3>Your wallet:</h3>
-      <div id="userCoins"></div>
-
-    </div>
-    // </div >
-  )
-}
-
-// export default Transactions
+  };
+};
