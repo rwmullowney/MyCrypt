@@ -33,10 +33,19 @@ module.exports = {
     db.User
       .findOneAndUpdate({ userEmail: req.body.userLogin }, req.body)
       .then(dbModel => res.json(dbModel))
-      .catch(err => 
+      .catch(err =>
         console.log(err)
         // res.status(422).json(err)
       );
+  },
+  pastTransactions: function (req, res) {
+    console.log("in the pastTransactions userController")
+    console.log(req.params.userLogin)
+    db.Transaction
+      .find({ userEmail: req.params.userLogin })
+      .then(dbModel => {
+        res.json(dbModel)})
+      .catch(err => console.log(err));
   }
   // remove: function(req, res) {
   //   db.Book

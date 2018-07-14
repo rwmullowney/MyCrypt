@@ -24,5 +24,9 @@ export default {
             userLogin: userLogin,
             wallet: wallet
         });
+    },
+    pastTransactions: function(userLogin){
+        console.log("in the api " + userLogin)
+        return axios.get("/api/users/" + userLogin + "/pastTransactions")
     }
 };
