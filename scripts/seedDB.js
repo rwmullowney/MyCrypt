@@ -49,3 +49,42 @@ db.User
     console.error(err);
     process.exit(1);
   });
+
+
+
+  const transactionSeed = [
+    {
+      coin: 'BTC',
+      coinID: 1,
+      purchasePrice: 1500,
+      coinAmount: 0.62,
+      userEmail: 'fake@gmail.com'
+    },
+    {
+      coin: 'LTC',
+      coinID: 2,
+      purchasePrice: 1000,
+      coinAmount: 3.284,
+      userEmail: 'fake@gmail.com'
+    },
+    {
+      coin: 'ETH',
+      coinID: 512,
+      purchasePrice: 350,
+      coinAmount: 1.09,
+      userEmail: 'rwm@gmail.com'
+    },
+  ];
+
+
+  db.Transaction
+  .remove({})
+  .then(() => db.Transaction.collection.insertMany(transactionSeed))
+  .then(data => {
+    console.log(data.insertedIds.length + " records inserted!");
+    process.exit(0);
+  })
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });

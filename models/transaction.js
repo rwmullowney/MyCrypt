@@ -14,12 +14,15 @@ const transactionSchema = new Schema({
     required: true
   },
   coinID: {
-    type: String
+    type: Number
   },
   purchasePrice: {
-    type: String
+    type: Number
   },
-  purchaseAmount: {
+  coinAmount: {
+    type: Number
+  },
+  userEmail: {
     type: String
   }
 });
