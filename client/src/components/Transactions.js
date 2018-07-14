@@ -7,23 +7,12 @@ import API from "../utils/API";
 import Background from '../components/img/background.png';
 
 var sectionStyle = {
- width: "100%",
- height: "400px",
- backgroundImage: `url(${Background})`
+  width: "100%",
+  height: "200px",
+  backgroundImage: "url(" + { Background } + ")"
 };
 
-class Section extends Component {
- render() {
-   return (
-     <section style={ sectionStyle }>
-     </section>
-   );
- }
-}
-
 export default class Transactions extends Component {
-
-
 
 
 
@@ -181,9 +170,11 @@ export default class Transactions extends Component {
 
 
   render() {
-
+  
+    // <section style={sectionStyle}
+    
     return (
-
+      
       <div className="container">
         <p className="text-center">Signed in as: {this.state.user}</p>
         {/* <p>{JSON.stringify(this.state.cryptos)}</p> */}
