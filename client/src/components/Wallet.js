@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import API from "../utils/API"
+import Background from '../assets/images/background.png';
 
 
 let cardStyle = {
@@ -9,6 +10,11 @@ let cardStyle = {
 let arrowStyle = {
   maxHeight: "18px",
   maxWidth: "18px"
+};
+let sectionStyle = {
+  width: "100%",
+  backgroundImage: `url(${Background})`
+  // backgroundColor: "#2F6690"
 };
 
 
@@ -149,7 +155,7 @@ export default class Wallet extends Component {
 
   render() {
     return (
-      <div className="container">
+      < div className="container" >
         <div className="text-center">
           <h2>Your Wallet</h2>
           <hr className="mx-5" />
@@ -162,7 +168,7 @@ export default class Wallet extends Component {
         <div className="row justify-content-center" id='coinCards'>
           {this.renderCards()}
         </div>
-      </div>
-    )
-  }
-}
+      </div >
+    );
+  };
+};
