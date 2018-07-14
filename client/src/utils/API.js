@@ -26,7 +26,17 @@ export default {
         });
     },
     pastTransactions: function(userLogin){
-        console.log("in the api " + userLogin)
         return axios.get("/api/users/" + userLogin + "/pastTransactions")
+    },
+    postTransaction: function(userLogin, transactionAmount, cryptoValue, coinAmount, coinSymbol, date){
+        // console.log(userLogin, transactionAmount, cryptoValue, coinAmount, coinSymbol, date);
+        return axios.post("/api/users/" + userLogin + "/postTransaction", {
+            userEmail: userLogin,
+            purchasePrice: transactionAmount,
+            coinID: cryptoValue,
+            coinAmount: coinAmount,
+            coinSymbol: coinSymbol,
+            date: date
+        });
     }
 };

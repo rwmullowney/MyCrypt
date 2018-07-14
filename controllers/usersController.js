@@ -39,13 +39,22 @@ module.exports = {
       );
   },
   pastTransactions: function (req, res) {
-    console.log("in the pastTransactions userController")
-    console.log(req.params.userLogin)
     db.Transaction
       .find({ userEmail: req.params.userLogin })
       .then(dbModel => {
         res.json(dbModel)})
       .catch(err => console.log(err));
+  },
+  postTransaction: function(req, res) {
+    console.log("in postTransaction")
+    console.log(req);
+    db.Transaction
+    .create(req.body)
+    .then(dbModel => res.json(dbModel))
+    .catch(err =>
+      console.log(err)
+      // res.status(422).json(err)
+    );
   }
   // remove: function(req, res) {
   //   db.Book
