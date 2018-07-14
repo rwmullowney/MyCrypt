@@ -54,7 +54,7 @@ db.User
 
   const transactionSeed = [
     {
-      coin: 'BTC',
+      coinSymbol: 'BTC',
       coinID: 1,
       purchasePrice: 1500,
       coinAmount: 0.62,
@@ -62,7 +62,7 @@ db.User
       date: new Date()
     },
     {
-      coin: 'LTC',
+      coinSymbol: 'LTC',
       coinID: 2,
       purchasePrice: 1000,
       coinAmount: 3.284,
@@ -70,7 +70,7 @@ db.User
       date: new Date()
     },
     {
-      coin: 'ETH',
+      coinSymbol: 'ETH',
       coinID: 512,
       purchasePrice: 350,
       coinAmount: 1.09,

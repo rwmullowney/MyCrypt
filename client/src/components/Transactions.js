@@ -68,16 +68,22 @@ export default class Transactions extends Component {
     API.pastTransactions(this.state.user)
       .then(
         res => {
-          console.log(res.data)
           this.setState({ pastTransactions: res.data })
         })
       .catch(err => console.log(err));
   };
 
   // Send a new transaction to the DB
-  postTransaction = () => {
-    // API.postTransaction(this.state)
-    console.log(this.state)
+  postTransaction = (coinAmount, coinSymbol) => {
+    let date = new Date()
+
+    API.postTransaction(this.state.user, this.state.transactionAmount, this.state.cryptoValue, coinAmount, coinSymbol, date)
+      .catch(err => console.log(err));;
+    console.log(this.state.transactionAmount)
+    console.log(this.state.user)
+    console.log(this.state.cryptoValue)
+    console.log(coinAmount)
+    console.log(coinSymbol)
   }
 
 
@@ -89,9 +95,6 @@ export default class Transactions extends Component {
     let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol;
     let coinPrice = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price;
     let coinAmount = (this.state.transactionAmount / coinPrice).toFixed(5);
-    console.log(wallet.cash)
-    console.log(this.state.transactionAmount)
-    console.log(coinAmount)
 
     // Checks if the user can afford the transaction
     if (Number(this.state.transactionAmount) > wallet.cash) {
@@ -117,6 +120,7 @@ export default class Transactions extends Component {
 
       // Updates the state of the wallet
       this.setState({ wallet: wallet, transactionStatus: "Transaction complete!" });
+      this.postTransaction(coinAmount, coinSymbol);
     }
   }
 
@@ -166,16 +170,19 @@ export default class Transactions extends Component {
 
 
   renderTransactions = () => {
+    let count = 0
     return this.state.pastTransactions.map((item) => {
-      return (
-
-        <div>
-          <p className="m-0">Purchased: {item.coinAmount} {item.coin}</p>
-          <p className="m-0">Cost: ${item.purchasePrice}</p>
-          <p className="m-0">Date: {item.date}</p>
-          <hr align="left" width="40%" />
-        </div>
-      )
+      while (count < 5) {
+        count++
+        return (
+          <div>
+            <p className="m-0">Purchased: {item.coinAmount} {item.coinSymbol}</p>
+            <p className="m-0">Cost: ${item.purchasePrice}</p>
+            <p className="m-0">Date: {item.date}</p>
+            <hr align="left" width="40%" />
+          </div>
+        )
+      }
     })
   }
 
@@ -253,7 +260,7 @@ export default class Transactions extends Component {
 
         <hr />
 
-        <h4>Transactions</h4>
+        <h4>Recent Purchases</h4>
         {this.renderTransactions()}
 
 
