@@ -14,7 +14,6 @@ let arrowStyle = {
 let sectionStyle = {
   width: "100%",
   backgroundImage: `url(${Background})`
-  // backgroundColor: "#2F6690"
 };
 
 

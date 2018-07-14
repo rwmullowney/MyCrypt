@@ -17,7 +17,8 @@ export default class Transactions extends Component {
     cryptos: [],
     cryptoValue: 1,
     transactionAmount: 1,
-    transactionStatus: ''
+    transactionStatus: '',
+    pastTransactions: [],
   };
 
   constructor(props) {
@@ -28,6 +29,7 @@ export default class Transactions extends Component {
 
   componentDidMount = () => {
     this.cryptoAPI();
+    this.pastTransactions();
   };
   // ==============================================
   // onChange Functions
@@ -56,10 +58,27 @@ export default class Transactions extends Component {
         res => {
           // Puts initial response (object of objects) into an array so we can check it's length for rendering (similar to users)
           this.setState({ cryptos: res.data.data })
-        }
-      )
+        })
       .catch(err => console.log(err));
   };
+
+  // Grab all transactions for the signed-in user
+  pastTransactions = () => {
+    API.pastTransactions(this.state.user)
+      .then(
+        res => {
+          console.log(res.data)
+          this.setState({ pastTransactions: res.data })
+        })
+      .catch(err => console.log(err));
+  };
+
+  // Send a new transaction to the DB
+  postTransaction = () => {
+    // API.postTransaction(this.state)
+    console.log(this.state)
+  }
+
 
   buyTransaction = e => {
     e.preventDefault();
@@ -145,10 +164,26 @@ export default class Transactions extends Component {
   };
 
 
+  renderTransactions = () => {
+    return this.state.pastTransactions.map((item) => {
+      return (
+
+        <div>
+          <p className="m-0">Purchased: {item.coinAmount} {item.coin}</p>
+          <p className="m-0">Cost: ${item.purchasePrice}</p>
+          <p className="m-0">Date: {item.date}</p>
+          <hr align="left" width="40%" />
+        </div>
+      )
+    })
+  }
+
+
 
 
   // Conditionally renders the coin menu/information once the crypto API information is loaded
   renderCoinMenu = () => {
+
     // Defining coin-related variables
     // Builds the URL to display the coin icon on the page
     let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol.toLowerCase();
@@ -214,6 +249,11 @@ export default class Transactions extends Component {
 
         <button className="btn btn-primary" id="buyTransaction" onClick={this.buyTransaction}>Buy</button>
         <button className="btn btn-danger" id="sellTransaction" onClick={this.sellTransaction}>Sell</button>
+
+        <hr />
+
+        <h4>Transactions</h4>
+        {this.renderTransactions()}
 
 
       </div>

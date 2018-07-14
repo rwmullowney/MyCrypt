@@ -18,6 +18,9 @@ router.route("/transactions")
   .get(usersController.userLogin)
   .post(usersController.transaction)
 
+// Matches with "/api/users/:userLogin/pastTransactions"
+router.route("/:userLogin/pastTransactions")
+  .get(usersController.pastTransactions);
 
 
 module.exports = router;

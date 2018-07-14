@@ -24,6 +24,9 @@ const transactionSchema = new Schema({
   },
   userEmail: {
     type: String
+  },
+  date: {
+    type: String
   }
 });
 
