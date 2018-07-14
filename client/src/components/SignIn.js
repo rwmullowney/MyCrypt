@@ -4,12 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { SignUpLink } from './SignUp';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
-import Background from '../components/img/cryptocurrency.jpg';
-
-let sectionStyle = {
-  width: "100%",
-  backgroundImage: `url(${Background})`
-};
 
 const SignInPage = ({ history }) =>
   <div>
@@ -69,7 +63,6 @@ class SignInForm extends Component {
       email === '';
 
     return (
-      <section style={sectionStyle}>
       <form onSubmit={this.onSubmit}>
         <input
           value={email}
@@ -89,7 +82,6 @@ class SignInForm extends Component {
 
         { error && <p>{error.message}</p> }
       </form>
-      </section>
     );
   }
 }

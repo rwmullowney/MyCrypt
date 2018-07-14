@@ -1,25 +1,12 @@
 import React, { Component } from 'react';
-import Background from '../components/img/cryptocurrency.jpg';
-
-let sectionStyle = {
-  width: "100%",
-  backgroundImage: `url(${Background})`
-};
-
-
 
 export default class Landing extends Component {
-
   render() {
-
-
     return (
-    <section style={sectionStyle}>
       <div className="landing">
-      <h1>Landing page</h1>
+      <h2>Welcome to MyCrypto! Your digital wallet and monitor</h2>
         {/* { this.props.children } */}
-      </div>  
-    </section>
+      </div>
     )
   }
 }

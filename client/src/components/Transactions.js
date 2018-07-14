@@ -6,13 +6,6 @@ import API from "../utils/API";
 
 import Background from '../components/img/background.png';
 
-// var Background = require('../components/img/background.png')
-
-var style = {
-  width: "100%",
-  backgroundImage: `url(${Background})`
-
-};
 
 export default class Transactions extends Component {
 
