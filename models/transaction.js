@@ -9,24 +9,29 @@ const Schema = mongoose.Schema;
 
 // Insert user schema for Mongoose here
 const transactionSchema = new Schema({
-  coin: {
+  coinSymbol: {
     type: String,
     required: true
   },
   coinID: {
-    type: Number
+    type: Number,
+    required: true
   },
   purchasePrice: {
-    type: Number
+    type: Number,
+    required: true
   },
   coinAmount: {
-    type: Number
+    type: Number,
+    required: true
   },
   userEmail: {
-    type: String
+    type: String,
+    required: true
   },
   date: {
-    type: String
+    type: String,
+    required: true
   }
 });
 
