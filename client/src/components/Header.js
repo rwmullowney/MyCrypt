@@ -16,6 +16,12 @@ var removeListBullet = {
   listStyleType: 'none'
 };
 
+var rootStyle = {
+  backgroundColor : 'black',
+  color : 'white',
+  height : '100vh' 
+}
+
 // Dummy wallet for populating newly created users with currency
 
 
