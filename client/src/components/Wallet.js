@@ -6,18 +6,10 @@ let cardStyle = {
   maxHeight: "225px",
   maxWidth: "300px"
 };
-
-let lineStyle = {
-  maxWidth: "750px"
-};
-
 let arrowStyle = {
   maxHeight: "18px",
   maxWidth: "18px"
-}
-
-let cryptosOwned = [];
-let coinAmounts = [];
+};
 
 
 export default class Wallet extends Component {
@@ -29,6 +21,7 @@ export default class Wallet extends Component {
     cryptos: [],
     cryptosOwned: [],
     coinAmounts: [],
+    netWorth: 0,
   };
 
   constructor(props) {
@@ -39,10 +32,10 @@ export default class Wallet extends Component {
 
   componentDidMount = () => {
     this.cryptoAPI();
-    this.netWorth();
   };
 
 
+  // Grabs cryptocurrency information from the API
   cryptoAPI = () => {
     API.search()
       .then(
@@ -50,6 +43,7 @@ export default class Wallet extends Component {
           // Puts initial response (object of objects) into an array so we can check it's length for rendering (similar to users)
           this.setState({ cryptos: res.data.data });
           this.grabUserCoins();
+          this.netWorth();
           console.log(this.state.cryptos);
         })
       .catch(err => console.log(err));
@@ -57,6 +51,11 @@ export default class Wallet extends Component {
 
   // Grab which coins the user has in their wallet, and convert them to their coin ID
   grabUserCoins = () => {
+
+    // Reset the cryptosOwned array so it doesn't stack on each additional component load
+    let cryptosOwned = [];
+    let coinAmounts = [];
+
     let wallet = this.state.wallet;
     for (var coinSymbol in wallet) {
       if (coinSymbol !== "cash") {
@@ -90,14 +89,16 @@ export default class Wallet extends Component {
 
   // Calculate the user's net worth
   netWorth = () => {
-    let netWorth = 0;
+
+    // Set base netWorth as the user's cash amount
+    let netWorth = Number(this.state.wallet.cash);
+
+    // Adds the value of the user's coins
     for (let i = 0; i < this.state.cryptosOwned.length; i++) {
-      netWorth += (this.state.cryptos[cryptosOwned[i]].quotes.USD.price * this.state.coinAmounts[i]);
+      netWorth += (this.state.cryptos[this.state.cryptosOwned[i]].quotes.USD.price * this.state.coinAmounts[i]);
     };
 
-    // Add the user's cash to the sum
-    netWorth += this.state.wallet.cash;
-    return (<h3 className="font-weight-light">Net Worth: ${netWorth.toFixed(2)}</h3>);
+    this.setState({ netWorth: netWorth.toFixed(2) })
   };
 
 
@@ -108,31 +109,25 @@ export default class Wallet extends Component {
 
   // Function to determine if the percent change is positive or negative, and assigns the green or red arrow accordingly
   arrowType = (percentChange) => {
-
-    // let arrow = "";
     if (percentChange[0] === "-") {
-      // arrow += negativeArrow
       return <img className="ml-2" style={arrowStyle} src={require("../assets/images/redArrow.png")} alt="A red, downward-facing arrow" />
     }
     else {
-      // arrow += positiveArrow
       return <img className="ml-2" style={arrowStyle} src={require("../assets/images/greenArrow.png")} alt="A green, upward-facing arrow" />
-    }
-  }
+    };
+  };
 
 
+  // Generates the cards and renders them on the page
   renderCards = () => {
-    // let coinCards = this.refs.coinCards;
-    // coinCards.remove();
-    let index = 0
-    console.log(this.state.wallet)
+
     return this.state.cryptosOwned.map((item) => {
       let percentChangeHr = String(this.state.cryptos[item].quotes.USD.percent_change_1h);
       let percentChangeDay = String(this.state.cryptos[item].quotes.USD.percent_change_24h);
       let percentChangeWeek = String(this.state.cryptos[item].quotes.USD.percent_change_7d);
 
       return (
-        <div ref="coinCards">
+        <div>
           <div className="card m-2" style={cardStyle}>
             <div className="card-body" id="${item}">
               <h4 className="font-weight-light">{this.state.cryptos[item].symbol} - ${this.state.cryptos[item].quotes.USD.price} </h4>
@@ -158,13 +153,13 @@ export default class Wallet extends Component {
         <div className="text-center">
           <h2>Your Wallet</h2>
           <hr className="mx-5" />
-          {this.netWorth()}
+          <h3 className="font-weight-light">Net Worth: ${this.state.netWorth}</h3>
           <h4 className="font-weight-light">Cash: ${this.state.wallet.cash}</h4>
           {/* <hr className="text-center mx-5" align="center" width="50%" /> */}
           <h4 className="mt-4 font-weight-light">Coins Owned</h4>
 
         </div>
-        <div className="row justify-content-center">
+        <div className="row justify-content-center" id='coinCards'>
           {this.renderCards()}
         </div>
       </div>
