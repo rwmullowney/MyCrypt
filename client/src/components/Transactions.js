@@ -76,6 +76,7 @@ export default class Transactions extends Component {
   // Send a new transaction to the DB
   postTransaction = (coinAmount, coinSymbol) => {
     let date = new Date()
+    console.log(date.getDate())
 
     API.postTransaction(this.state.user, this.state.transactionAmount, this.state.cryptoValue, coinAmount, coinSymbol, date)
       .catch(err => console.log(err));;
@@ -262,7 +263,6 @@ export default class Transactions extends Component {
 
         <h4>Recent Purchases</h4>
         {this.renderTransactions()}
-
 
       </div>
 
