@@ -58,21 +58,24 @@ db.User
       coinID: 1,
       purchasePrice: 1500,
       coinAmount: 0.62,
-      userEmail: 'fake@gmail.com'
+      userEmail: 'fake@gmail.com',
+      date: new Date()
     },
     {
       coin: 'LTC',
       coinID: 2,
       purchasePrice: 1000,
       coinAmount: 3.284,
-      userEmail: 'fake@gmail.com'
+      userEmail: 'fake@gmail.com',
+      date: new Date()
     },
     {
       coin: 'ETH',
       coinID: 512,
       purchasePrice: 350,
       coinAmount: 1.09,
-      userEmail: 'rwm@gmail.com'
+      userEmail: 'rwm@gmail.com',
+      date: new Date()
     },
   ];
 
