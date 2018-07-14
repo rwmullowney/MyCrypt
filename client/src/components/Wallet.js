@@ -5,7 +5,8 @@ import Background from '../assets/images/background.png';
 
 let cardStyle = {
   maxHeight: "225px",
-  maxWidth: "300px"
+  maxWidth: "300px",
+  color: 'black'
 };
 let arrowStyle = {
   maxHeight: "18px",
@@ -15,6 +16,11 @@ let sectionStyle = {
   width: "100%",
   backgroundImage: `url(${Background})`
 };
+var rootStyle = {
+  backgroundColor : 'black',
+  color : 'white',
+  // height : '100vh' 
+}
 
 
 export default class Wallet extends Component {
@@ -132,6 +138,7 @@ export default class Wallet extends Component {
       let percentChangeWeek = String(this.state.cryptos[item].quotes.USD.percent_change_7d);
 
       return (
+        <div style={rootStyle}>
         <div>
           <div className="card m-2" style={cardStyle}>
             <div className="card-body" id="${item}">
@@ -144,6 +151,7 @@ export default class Wallet extends Component {
                 1 Day: {this.arrowType(percentChangeDay)} {percentChangeDay}%
               <br />
                 1 Week: {this.arrowType(percentChangeWeek)} {percentChangeWeek}%</h6>
+        </div>
             </div>
           </div>
         </div>
@@ -154,20 +162,31 @@ export default class Wallet extends Component {
 
   render() {
     return (
-      < div className="container" >
-        <div className="text-center">
-          <h2>Your Wallet</h2>
-          <hr className="mx-5" />
-          <h3 className="font-weight-light">Net Worth: ${this.state.netWorth}</h3>
+      <div style={rootStyle}>  
+      < div className="container">
+      <div className="col-12 text-center">
+      <h1 className="text-center"></h1>
+          <h1>Your Wallet</h1>
+
+          <div className="row">
+          <div class="column-4">
+          <h3 className="font-weight-heavy">Net Worth: ${this.state.netWorth}</h3>
+          <div class="column-4">
           <h4 className="font-weight-light">Cash: ${this.state.wallet.cash}</h4>
           {/* <hr className="text-center mx-5" align="center" width="50%" /> */}
+          <div class="column-4">
           <h4 className="mt-4 font-weight-light">Coins Owned</h4>
-
+          </div>
+          </div>
+          </div>
+          
         </div>
         <div className="row justify-content-center" id='coinCards'>
           {this.renderCards()}
         </div>
+        </div>
       </div >
+    </div>
     );
   };
 };

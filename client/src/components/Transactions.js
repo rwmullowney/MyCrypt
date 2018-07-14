@@ -9,7 +9,7 @@ import Background from '../components/img/background.png';
 var rootStyle = {
   backgroundColor : 'black',
   color : 'white',
-  height : '100vh' 
+  // height : '100vh' 
 }
 
 
@@ -226,9 +226,8 @@ export default class Transactions extends Component {
   render() {
   
 
-
     return (
-      
+  <div style={rootStyle}>    
       <div className="container">
         <p className="text-center">Signed in as: {this.state.user}</p>
         {/* <p>{JSON.stringify(this.state.cryptos)}</p> */}
@@ -241,6 +240,7 @@ export default class Transactions extends Component {
             <label >Currencies:</label>
             {this.renderCoinMenu()}
           </div>
+          
         </div>
 
         <div className="form-group">
@@ -267,9 +267,7 @@ export default class Transactions extends Component {
 
         <hr />
 
-        <h4>Recent Purchases</h4>
-        {this.renderTransactions()}
-
+  </div>
 
       </div>
 
