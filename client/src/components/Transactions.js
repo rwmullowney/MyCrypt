@@ -75,6 +75,7 @@ export default class Transactions extends Component {
   // Send a new transaction to the DB
   postTransaction = (coinAmount, coinSymbol) => {
     let date = new Date()
+    console.log(date.getDate())
 
     API.postTransaction(this.state.user, this.state.transactionAmount, this.state.cryptoValue, coinAmount, coinSymbol, date)
       .catch(err => console.log(err));;
@@ -177,7 +178,7 @@ export default class Transactions extends Component {
           <div>
             <p className="m-0">Purchased: {item.coinAmount} {item.coinSymbol}</p>
             <p className="m-0">Cost: ${item.purchasePrice}</p>
-            <p className="m-0">Date: {item.date}</p>
+            <p className="m-0">Timestamp: {item.date}</p>
             <hr align="left" width="40%" />
           </div>
         )
@@ -222,9 +223,8 @@ export default class Transactions extends Component {
     return (
 
       <div className="container">
-        <p className="text-center">Signed in as: {this.state.user}</p>
         {/* <p>{JSON.stringify(this.state.cryptos)}</p> */}
-        <p className="text-center">Cash: ${this.props.wallet.cash}</p>
+        <h3 className="text-center">Cash: ${this.props.wallet.cash}</h3>
 
 
         <h3 className="mt-3">Select the currency you'd like to buy:</h3>
@@ -261,7 +261,6 @@ export default class Transactions extends Component {
 
         <h4>Recent Purchases</h4>
         {this.renderTransactions()}
-
 
       </div>
 

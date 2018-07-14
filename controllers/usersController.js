@@ -41,20 +41,22 @@ module.exports = {
   pastTransactions: function (req, res) {
     db.Transaction
       .find({ userEmail: req.params.userLogin })
+      .sort({ date: 'descending' })
       .then(dbModel => {
-        res.json(dbModel)})
+        res.json(dbModel)
+      })
       .catch(err => console.log(err));
   },
-  postTransaction: function(req, res) {
+  postTransaction: function (req, res) {
     console.log("in postTransaction")
     console.log(req);
     db.Transaction
-    .create(req.body)
-    .then(dbModel => res.json(dbModel))
-    .catch(err =>
-      console.log(err)
-      // res.status(422).json(err)
-    );
+      .create(req.body)
+      .then(dbModel => res.json(dbModel))
+      .catch(err =>
+        console.log(err)
+        // res.status(422).json(err)
+      );
   }
   // remove: function(req, res) {
   //   db.Book

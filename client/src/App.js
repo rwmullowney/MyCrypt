@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
-import Landing from './components/Landing';
+import Home from './components/Landing';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Transactions from './components/Transactions';
@@ -146,8 +146,8 @@ class App extends Component {
           <hr />
 
           <Route
-            exact path={routes.LANDING}
-            component={() => <Landing />}
+            exact path={routes.HOME}
+            component={() => <Home />}
           />
           <Route
             exact path={routes.SIGN_UP}
@@ -176,10 +176,7 @@ class App extends Component {
             component={() => <PasswordForgetPage />}
           /> */}
           {/* Not in use yet - Where the user is redirected after signing up/in*/}
-          {/* <Route
-            exact path={routes.HOME}
-            component={() => <HomePage />}
-          /> */}
+
           {/* Not in use yet */}
           {/* <Route
             exact path={routes.ACCOUNT}
