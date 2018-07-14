@@ -40,8 +40,6 @@ const HeaderAuth = () =>
   <ul>
     <div className="row justify-content-center">
       <li className="mx-5" style={removeListBullet}><Link to={routes.HOME}>Home</Link></li>
-      <li className="mx-5" style={removeListBullet}><Link to={routes.LANDING}>Landing</Link></li>
-      <li className="mx-5" style={removeListBullet}><Link to={routes.ACCOUNT}>Account</Link></li>
       <li className="mx-5" style={removeListBullet}><Link to={routes.TRANSACTIONS}>Transactions</Link></li>
       <li className="mx-5" style={removeListBullet}><Link to={routes.WALLET}>Wallet</Link></li>
       <li className="mx-5" style={removeListBullet}><SignOutButton /></li>
@@ -51,7 +49,6 @@ const HeaderAuth = () =>
 const HeaderNonAuth = () =>
   <ul>
     <div className="row justify-content-center">
-      <li className="mx-5" style={removeListBullet}><Link to={routes.LANDING}>Landing</Link></li>
       <li className="mx-5" style={removeListBullet}><Link to={routes.SIGN_IN}>Sign In</Link></li>
     </div>
   </ul>
