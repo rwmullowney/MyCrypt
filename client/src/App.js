@@ -39,22 +39,7 @@ class App extends Component {
       // Signs the user into their game account upon logging into Firebase
       this.userLogin();
     });
-  }
-
-
-  // https://github.com/facebook/react/issues/5591
-  // https://github.com/facebook/react/issues/5591
-  // https://github.com/facebook/react/issues/5591
-  // cryptoAPI = () => {
-  //   API.search()
-  //     .then(
-  //       res => {
-  //         // Puts initial response (object of objects) into an array so we can check it's length for rendering (similar to users)
-  //         this.setState({ cryptos: res.data.data })
-  //       }
-  //     )
-  //     .catch(err => console.log(err));
-  // };
+  };
 
 
   // Sees if the signed in user has an account in the DB and if not, creates the user
@@ -66,10 +51,13 @@ class App extends Component {
         if (res.data === null) {
           console.log("account not found");
           this.createUser();
+
+          // Re-log the user in after creating their account
+          this.userLogin();
         }
         else {
           this.setState({ wallet: res.data.wallet })
-        }
+        };
       })
       .catch(err => console.log(err))
   };

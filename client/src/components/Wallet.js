@@ -161,7 +161,7 @@ export default class Wallet extends Component {
           <h3 className="font-weight-light">Net Worth: ${this.state.netWorth}</h3>
           <h4 className="font-weight-light">Cash: ${this.state.wallet.cash}</h4>
           {/* <hr className="text-center mx-5" align="center" width="50%" /> */}
-          <h4 className="mt-4 font-weight-light">Coins Owned</h4>
+          <h4 className="mt-4 font-weight-light"><u>Coins Owned</u></h4>
 
         </div>
         <div className="row justify-content-center" id='coinCards'>
