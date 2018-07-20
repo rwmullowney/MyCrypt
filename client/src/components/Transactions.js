@@ -4,13 +4,7 @@ import API from "../utils/API"
 
 
 
-
-
-
 export default class Transactions extends Component {
-
-
-
 
   // Set initial state
   state = {
@@ -19,6 +13,7 @@ export default class Transactions extends Component {
     cryptoValue: 1,
     transactionAmount: 1,
     transactionStatus: '',
+    transactionType: ' ',
     pastTransactions: [],
   };
 
@@ -32,6 +27,7 @@ export default class Transactions extends Component {
     this.cryptoAPI();
     this.pastTransactions();
   };
+
   // ==============================================
   // onChange Functions
   // ==============================================
@@ -78,7 +74,7 @@ export default class Transactions extends Component {
     let date = new Date()
     console.log(date.getDate())
 
-    API.postTransaction(this.state.user, this.state.transactionAmount, this.state.cryptoValue, coinAmount, coinSymbol, date)
+    API.postTransaction(this.state.user, this.state.transactionAmount, this.state.transactionType, this.state.cryptoValue, coinAmount, coinSymbol, date)
       .catch(err => console.log(err));;
     console.log(this.state.transactionAmount)
     console.log(this.state.user)
@@ -90,86 +86,102 @@ export default class Transactions extends Component {
 
   buyTransaction = e => {
     e.preventDefault();
+    this.setState({ transactionType: "buy" }, () => {
 
-    // Puts the state of the wallet in a variable so I can adjust the entire object accordingly before updating the db with it
-    let wallet = this.props.wallet;
-    let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol;
-    let coinPrice = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price;
-    let coinAmount = (this.state.transactionAmount / coinPrice).toFixed(5);
 
-    // Checks if the user can afford the transaction
-    if (Number(this.state.transactionAmount) > wallet.cash) {
-      this.setState({ transactionStatus: "You cannot afford this transaction!" });
-    }
+      console.log(this.state.transactionType)
 
-    // Allows the transaction if the user can afford it
-    else {
-      wallet.cash -= Number(this.state.transactionAmount);
-      wallet.cash = wallet.cash.toFixed(2);
+      // Puts the state of the wallet in a variable so I can adjust the entire object accordingly before updating the db with it
+      let wallet = this.props.wallet;
+      let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol;
+      let coinPrice = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price;
+      let coinAmount = (this.state.transactionAmount / coinPrice).toFixed(5);
 
-      // Checks to see if the coin is in the user's wallet (i.e. not undefined).  If not it sets the coin amount to the transactionAmount.  Otherwise, it adds it.
-      if (!wallet[coinSymbol]) {
-        wallet[coinSymbol] = Number(coinAmount);
+      // Checks if the user can afford the transaction
+      if (Number(this.state.transactionAmount) > wallet.cash) {
+        this.setState({ transactionStatus: "You cannot afford this transaction!" });
       }
-      else { wallet[coinSymbol] += Number(coinAmount) };
 
-      console.log("Buying...")
-      console.log(wallet)
-      API.transaction(this.state.user, wallet)
-        // .then(res => console.log(res))
-        .catch(err => console.log(err));
+      // Allows the transaction if the user can afford it
+      else {
+        wallet.cash -= Number(this.state.transactionAmount);
+        wallet.cash = wallet.cash.toFixed(2);
 
-      // Updates the state of the wallet
-      this.setState({ wallet: wallet, transactionStatus: "Transaction complete!" });
-      this.postTransaction(coinAmount, coinSymbol);
-    }
-  }
+        // Checks to see if the coin is in the user's wallet (i.e. not undefined).  If not it sets the coin amount to the transactionAmount.  Otherwise, it adds it.
+        if (!wallet[coinSymbol]) {
+          wallet[coinSymbol] = Number(coinAmount);
+        }
+        else { wallet[coinSymbol] += Number(coinAmount) };
+
+        console.log("Buying...")
+        console.log(wallet)
+
+        // Updates the user wallet
+        API.transaction(this.state.user, wallet)
+          // .then(res => console.log(res))
+          .catch(err => console.log(err));
+
+        // Updates the state of the wallet
+        this.setState({ wallet: wallet, transactionStatus: "Transaction complete!" });
+
+        // Posts the transaction to the database
+        this.postTransaction(coinAmount, coinSymbol);
+      };
+    });
+  };
 
 
   sellTransaction = e => {
     e.preventDefault();
-    console.log("selling")
-
-    // Puts the state of the wallet in a variable so I can adjust the entire object accordingly before updating the db with it
-    let wallet = this.props.wallet;
-    let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol;
-    let coinPrice = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price;
-    let coinAmount = (this.state.transactionAmount / coinPrice).toFixed(5);
+    this.setState({ transactionType: "sell" }, () => {
 
 
-    // Checks if the user has enough of a given coin to perform the transaction
-    if (!wallet[coinSymbol] || (coinAmount) > wallet[coinSymbol]) {
-      this.setState({ transactionStatus: "You don't have that many coins to sell!" });
-    }
-    else {
-      wallet.cash = Number(wallet.cash)
-      wallet.cash += Number(this.state.transactionAmount);
-      wallet.cash = wallet.cash.toFixed(2);
+      console.log(this.state.transactionType)
 
-      wallet[coinSymbol] = Number(wallet[coinSymbol] - coinAmount).toFixed(5);
-      console.log(wallet.cash)
-      console.log(wallet[coinSymbol])
+      // Puts the state of the wallet in a variable so I can adjust the entire object accordingly before updating the db with it
+      let wallet = this.props.wallet;
+      let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol;
+      let coinPrice = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price;
+      let coinAmount = (this.state.transactionAmount / coinPrice).toFixed(5);
 
-      // A transaction resulted in BTC showing as null in the wallet so I'm hoping this works around that 
-      // (it allowed me to sell 0.24447 when there was only 0.2444 or something to that effect)
-      if (wallet[coinSymbol] === 0 || wallet[coinSymbol] === null) {
-        delete wallet[coinSymbol];
+
+      // Checks if the user has enough of a given coin to perform the transaction
+      if (!wallet[coinSymbol] || (coinAmount) > wallet[coinSymbol]) {
+        this.setState({ transactionStatus: "You don't have that many coins to sell!" });
       }
+      else {
+        wallet.cash = Number(wallet.cash)
+        wallet.cash += Number(this.state.transactionAmount);
+        wallet.cash = wallet.cash.toFixed(2);
 
-      console.log("Selling...")
-      console.log(wallet)
+        wallet[coinSymbol] = Number(wallet[coinSymbol] - coinAmount).toFixed(5);
+        console.log(wallet.cash)
+        console.log(wallet[coinSymbol])
 
-      API.transaction(this.state.user, wallet)
-        // .then(res => console.log(res))
-        .catch(err => console.log(err));
+        // A transaction resulted in BTC showing as null in the wallet so I'm hoping this works around that 
+        // (it allowed me to sell 0.24447 when there was only 0.2444 or something to that effect)
+        if (wallet[coinSymbol] === 0 || wallet[coinSymbol] === null) {
+          delete wallet[coinSymbol];
+        }
 
-      // Updates the state of the wallet
-      this.setState({ wallet: wallet, transactionStatus: "Transaction complete!" });
-    };
+        console.log("Selling...")
+        console.log(wallet)
 
+        // Updates the user wallet
+        API.transaction(this.state.user, wallet)
+          // .then(res => console.log(res))
+          .catch(err => console.log(err));
+
+        // Updates the state of the wallet
+        this.setState({ wallet: wallet, transactionStatus: "Transaction complete!" });
+
+        // Posts the transaction to the database
+        this.postTransaction(coinAmount, coinSymbol);
+      };
+    });
   };
 
-
+  // Render the most recent 5 customer transactions to the page
   renderTransactions = () => {
     let count = 0
     return this.state.pastTransactions.map((item) => {

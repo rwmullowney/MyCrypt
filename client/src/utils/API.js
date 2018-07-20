@@ -28,11 +28,12 @@ export default {
     pastTransactions: function(userLogin){
         return axios.get("/api/users/" + userLogin + "/pastTransactions")
     },
-    postTransaction: function(userLogin, transactionAmount, cryptoValue, coinAmount, coinSymbol, date){
+    postTransaction: function(userLogin, transactionAmount, transactionType, cryptoValue, coinAmount, coinSymbol, date){
         // console.log(userLogin, transactionAmount, cryptoValue, coinAmount, coinSymbol, date);
         return axios.post("/api/users/" + userLogin + "/postTransaction", {
             userEmail: userLogin,
             purchasePrice: transactionAmount,
+            transactionType: transactionType,
             coinID: cryptoValue,
             coinAmount: coinAmount,
             coinSymbol: coinSymbol,
