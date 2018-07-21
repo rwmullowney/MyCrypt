@@ -13,7 +13,8 @@ export default class Transactions extends Component {
     cryptoValue: 1,
     transactionAmount: 1,
     transactionStatus: '',
-    pastTransactions: [],
+    pastBuys: [],
+    pastSells: [],
   };
 
   constructor(props) {
@@ -24,7 +25,8 @@ export default class Transactions extends Component {
 
   componentDidMount = () => {
     this.cryptoAPI();
-    this.pastTransactions();
+    this.pastBuys();
+    this.pastSells();
   };
 
   // ==============================================
@@ -58,12 +60,20 @@ export default class Transactions extends Component {
       .catch(err => console.log(err));
   };
 
-  // Grab all transactions for the signed-in user
-  pastTransactions = () => {
-    API.pastTransactions(this.state.user)
+  // Grab recent transactions for the signed-in user
+  pastBuys = () => {
+    API.pastBuys(this.state.user)
       .then(
         res => {
-          this.setState({ pastTransactions: res.data })
+          this.setState({ pastBuys: res.data })
+        })
+      .catch(err => console.log(err));
+  };
+  pastSells = () => {
+    API.pastSells(this.state.user)
+      .then(
+        res => {
+          this.setState({ pastSells: res.data })
         })
       .catch(err => console.log(err));
   };
@@ -173,26 +183,38 @@ export default class Transactions extends Component {
     };
   };
 
-  // Render the most recent 5 customer transactions to the page
+  // Render the most recent 3 customer transactions to the page
   renderBuys = () => {
-    console.log(this.state.pastTransactions)
-    let count = 0
-    return this.state.pastTransactions.map((item) => {
-      console.log(this.state.pastTransactions.map.length)
-      // while (count < 3) {
-      if (item.transactionType === "buy") {
-          console.log("while loop running")
+    console.log(this.state.pastBuys)
 
-          count++
-          return (
-            <div>
-              <p className="m-0">Purchased: {item.coinAmount} {item.coinSymbol}</p>
-              <p className="m-0">Cost: ${item.transactionAmount}</p>
-              <p className="m-0">Timestamp: {item.date}</p>
-              <hr align="left" width="40%" />
-            </div>
-          );
-        // };
+    return this.state.pastBuys.map((item) => {
+      if (item.transactionType === "buy") {
+
+        return (
+          <div>
+            <p className="m-0">Purchased: {item.coinAmount} {item.coinSymbol}</p>
+            <p className="m-0">Amount: ${item.transactionAmount}</p>
+            <p className="m-0">Timestamp: {item.date}</p>
+            <hr align="left" width="40%" />
+          </div>
+        );
+      };
+    });
+  };
+  renderSells = () => {
+    console.log(this.state.pastSells)
+
+    return this.state.pastSells.map((item) => {
+      if (item.transactionType === "sell") {
+
+        return (
+          <div>
+            <p className="m-0">Sold: {item.coinAmount} {item.coinSymbol}</p>
+            <p className="m-0">Amount: ${item.transactionAmount}</p>
+            <p className="m-0">Timestamp: {item.date}</p>
+            <hr align="left" width="40%" />
+          </div>
+        );
       };
     });
   };
@@ -270,8 +292,17 @@ export default class Transactions extends Component {
 
         <hr />
 
-        <h4>Recent Purchases</h4>
-        {this.renderBuys()}
+        {/* <div className="row"> */}
+        <div className="col-6">
+          <h4>Recent Purchases</h4>
+          {this.renderBuys()}
+        </div>
+
+        <div className="col-6">
+          <h4>Recent Sells</h4>
+          {this.renderSells()}
+        </div>
+        {/* </div> */}
 
       </div>
 

@@ -18,9 +18,13 @@ router.route("/transactions")
   .get(usersController.userLogin)
   .post(usersController.transaction)
 
-// Matches with "/api/users/:userLogin/pastTransactions"
-router.route("/:userLogin/pastTransactions")
-  .get(usersController.pastTransactions);
+// Matches with "/api/users/:userLogin/pastBuys"
+router.route("/:userLogin/pastBuys")
+  .get(usersController.pastBuys);
+
+  // Matches with "/api/users/:userLogin/pastSells"
+router.route("/:userLogin/pastSells")
+.get(usersController.pastSells);
 
 // Matches with "/api/users/:userLogin/postTransaction"
 router.route("/:userLogin/postTransaction")

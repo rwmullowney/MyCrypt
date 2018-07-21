@@ -25,8 +25,11 @@ export default {
             wallet: wallet
         });
     },
-    pastTransactions: function(userLogin){
-        return axios.get("/api/users/" + userLogin + "/pastTransactions");
+    pastBuys: function(userLogin){
+        return axios.get("/api/users/" + userLogin + "/pastBuys");
+    },
+    pastSells: function(userLogin){
+        return axios.get("/api/users/" + userLogin + "/pastSells");
     },
     postTransaction: function(userLogin, transactionAmount, transactionType, cryptoValue, coinAmount, coinSymbol, date){
         // console.log(userLogin, transactionAmount, cryptoValue, coinAmount, coinSymbol, date);

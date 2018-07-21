@@ -38,9 +38,26 @@ module.exports = {
         // res.status(422).json(err)
       );
   },
-  pastTransactions: function (req, res) {
+  pastBuys: function (req, res) {
     db.Transaction
-      .find({ userEmail: req.params.userLogin })
+      .find({
+        userEmail: req.params.userLogin,
+        transactionType: 'buy'
+      })
+      .limit(3)
+      .sort({ date: 'descending' })
+      .then(dbModel => {
+        res.json(dbModel)
+      })
+      .catch(err => console.log(err));
+  },
+  pastSells: function (req, res) {
+    db.Transaction
+      .find({
+        userEmail: req.params.userLogin,
+        transactionType: 'sell'
+      })
+      .limit(3)
       .sort({ date: 'descending' })
       .then(dbModel => {
         res.json(dbModel)
