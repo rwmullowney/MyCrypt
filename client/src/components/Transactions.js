@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import CoinMenu from "./CoinMenu";
 import API from "../utils/API"
 
+var ulStyle ={
+    listStyle: 'none',
+    paddingLeft: 0
+}
+
 
 
 export default class Transactions extends Component {
@@ -292,17 +297,21 @@ export default class Transactions extends Component {
 
         <hr />
 
-        {/* <div className="row"> */}
-        <div className="col-6">
-          <h4>Recent Purchases</h4>
-          {this.renderBuys()}
-        </div>
+        <div className="row">
+          <div className="col-6">
+            <h4>Recent Purchases</h4>
+            <ul style={ulStyle}>
+              {this.renderBuys()}
+            </ul>
+          </div>
 
-        <div className="col-6">
-          <h4>Recent Sells</h4>
-          {this.renderSells()}
+          <div className="col-6">
+            <h4>Recent Sells</h4>
+            <ul style={ulStyle}>
+              {this.renderSells()}
+            </ul>
+          </div>
         </div>
-        {/* </div> */}
 
       </div>
 
