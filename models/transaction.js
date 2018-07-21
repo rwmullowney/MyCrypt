@@ -21,7 +21,7 @@ const transactionSchema = new Schema({
     type: Number,
     required: true
   },
-  purchasePrice: {
+  transactionAmount: {
     type: Number,
     required: true
   },

@@ -85,6 +85,7 @@ export default class Transactions extends Component {
 
   buyTransaction = e => {
     e.preventDefault();
+    console.log(e.target.value)
     let transactionType = 'buy'
 
     // Puts the state of the wallet in a variable so I can adjust the entire object accordingly before updating the db with it
@@ -173,22 +174,28 @@ export default class Transactions extends Component {
   };
 
   // Render the most recent 5 customer transactions to the page
-  renderTransactions = () => {
+  renderBuys = () => {
+    console.log(this.state.pastTransactions)
     let count = 0
     return this.state.pastTransactions.map((item) => {
-      while (count < 5) {
-        count++
-        return (
-          <div>
-            <p className="m-0">Purchased: {item.coinAmount} {item.coinSymbol}</p>
-            <p className="m-0">Cost: ${item.purchasePrice}</p>
-            <p className="m-0">Timestamp: {item.date}</p>
-            <hr align="left" width="40%" />
-          </div>
-        )
-      }
-    })
-  }
+      console.log(this.state.pastTransactions.map.length)
+      // while (count < 3) {
+      if (item.transactionType === "buy") {
+          console.log("while loop running")
+
+          count++
+          return (
+            <div>
+              <p className="m-0">Purchased: {item.coinAmount} {item.coinSymbol}</p>
+              <p className="m-0">Cost: ${item.transactionAmount}</p>
+              <p className="m-0">Timestamp: {item.date}</p>
+              <hr align="left" width="40%" />
+            </div>
+          );
+        // };
+      };
+    });
+  };
 
 
 
@@ -264,7 +271,7 @@ export default class Transactions extends Component {
         <hr />
 
         <h4>Recent Purchases</h4>
-        {this.renderTransactions()}
+        {this.renderBuys()}
 
       </div>
 
