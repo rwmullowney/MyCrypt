@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CoinMenu from "./CoinMenu";
 import API from "../utils/API"
 
+// Removes indentation for unordered list items
 var ulStyle ={
     listStyle: 'none',
     paddingLeft: 0
