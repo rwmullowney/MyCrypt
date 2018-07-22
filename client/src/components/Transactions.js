@@ -6,8 +6,7 @@ import API from "../utils/API"
 var ulStyle ={
     listStyle: 'none',
     paddingLeft: 0
-}
-
+};
 
 
 export default class Transactions extends Component {
@@ -263,7 +262,7 @@ export default class Transactions extends Component {
 
       <div className="container">
         {/* <p>{JSON.stringify(this.state.cryptos)}</p> */}
-        <h3 className="text-center">Cash: ${this.props.wallet.cash}</h3>
+        <h3 className="text-center mt-5 font-weight-light">Cash: ${this.props.wallet.cash}</h3>
 
 
         <h3 className="mt-3">Select the currency you'd like to buy:</h3>

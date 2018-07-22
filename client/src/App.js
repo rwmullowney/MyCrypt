@@ -118,8 +118,6 @@ class App extends Component {
         <div>
           <Header authUser={this.state.authUser} />
 
-          <hr />
-
           <Route
             exact path={routes.HOME}
             component={() => <Home />}
