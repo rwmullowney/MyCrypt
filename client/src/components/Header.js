@@ -60,9 +60,9 @@ const HeaderAuth = () =>
   </ul>
 
 const HeaderNonAuth = () =>
-  <ul>
-    <div className="row justify-content-center">
-      <li className="mx-3" style={removeListBullet}><Link to={routes.SIGN_IN}>Sign In</Link></li>
+  <ul style={removeListBullet}>
+    <div className="row">
+      <li className="mx-3"><Link to={routes.SIGN_IN}>Sign In</Link></li>
     </div>
   </ul>
 
