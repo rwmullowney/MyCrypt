@@ -155,8 +155,8 @@ export default class Wallet extends Component {
   render() {
     return (
       < div className="container" >
-        <div className="mt-5 text-center">
-          <h2>Your Wallet</h2>
+        <div className="mt-4 text-center">
+          <h2 className="font-weight-light">Your Wallet</h2>
 
           <hr style={{width: "50%", align: "center"}} />
 
