@@ -13,13 +13,13 @@ var textStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
-  transform: "translate(-50%, -50%)"
+  transform: "translate(-50%, -50%)",
 };
 
 // CSS to remove the bullet of the <ul> tags
 var removeListBullet = {
   listStyleType: 'none',
-  display: "inline"
+  display: "inline",
 };
 
 var headerStyle = {

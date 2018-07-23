@@ -15,7 +15,12 @@ import { firebase } from './firebase';
 
 let newWallet = {
   cash: 10000
-}
+};
+
+let backgroundStyle = {
+  backgroundColor: "#F9F8F8",
+  position: "absolute", top: 0, bottom: 0, left: 0, right: 0
+};
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +31,7 @@ class App extends Component {
       wallet: {},
       // cryptos: []
     };
-  }
+  };
 
 
   componentDidMount() {
@@ -34,7 +39,7 @@ class App extends Component {
       authUser
         ? this.setState(() => ({ authUser }))
         : this.setState(() => ({ authUser: null }))
-      // console.log(this.state.authUser.email)
+        // console.log(this.state.authUser.email)
         ;
       // Signs the user into their game account upon logging into Firebase
       this.userLogin();
@@ -115,7 +120,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <div style={backgroundStyle}>
           <Header authUser={this.state.authUser} />
 
           <Route
