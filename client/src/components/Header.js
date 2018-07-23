@@ -30,6 +30,7 @@ var headerStyle = {
 
 
 const Header = ({ authUser }) =>
+<div>
   <div className="container" >
     <div style={headerStyle}>
       <div className="mt-1">
@@ -46,7 +47,7 @@ const Header = ({ authUser }) =>
     </div>
     <hr className="mt-0" />
   </div>
-
+</div>
 
 // Determine what links to show depending on whether the user is signed in
 const HeaderAuth = () =>

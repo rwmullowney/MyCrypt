@@ -18,7 +18,7 @@ let newWallet = {
 };
 
 let backgroundStyle = {
-  backgroundColor: "#F9F8F8",
+  backgroundColor: "#FAF9F9",
   position: "absolute", top: 0, bottom: 0, left: 0, right: 0
 };
 
@@ -122,7 +122,10 @@ class App extends Component {
       <Router>
         <div style={backgroundStyle}>
           <Header authUser={this.state.authUser} />
-
+          {/* <Route
+            exact path={routes.LANDING}
+            component={() => <Home />}
+          /> */}
           <Route
             exact path={routes.HOME}
             component={() => <Home />}
