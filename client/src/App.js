@@ -18,7 +18,7 @@ let newWallet = {
 };
 
 let backgroundStyle = {
-  backgroundColor: "#FAF9F9",
+  backgroundColor: "#FEFBF7",
   position: "absolute", top: 0, bottom: 0, left: 0, right: 0
 };
 

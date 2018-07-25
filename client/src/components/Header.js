@@ -4,7 +4,8 @@ import SignOutButton from './SignOut';
 import * as routes from '../constants/routes';
 
 
-
+// potential header colors:
+// #F8E9CD
 
 // Defines variable for use as CSS
 var textStyle = {
@@ -25,12 +26,16 @@ var removeListBullet = {
 var headerStyle = {
   position: "relative",
   overflow: "hidden",
-  maxHeight: "75px"
+  maxHeight: "75px",
 }
+
+var headerColor = {
+  backgroundColor: "#FDF8F0"
+};
 
 
 const Header = ({ authUser }) =>
-<div>
+<div style={headerColor}>
   <div className="container" >
     <div style={headerStyle}>
       <div className="mt-1">

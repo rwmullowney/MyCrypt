@@ -3,9 +3,13 @@ import CoinMenu from "./CoinMenu";
 import API from "../utils/API"
 
 // Removes indentation for unordered list items
-var ulStyle ={
-    listStyle: 'none',
-    paddingLeft: 0
+var ulStyle = {
+  listStyle: 'none',
+  paddingLeft: 0
+};
+
+var moneyStyle = {
+  display: "table"
 };
 
 
@@ -85,8 +89,8 @@ export default class Transactions extends Component {
 
   // Send a new transaction to the DB
   postTransaction = (coinAmount, coinSymbol, transactionType) => {
-    let date = new Date()
-    console.log(date.getDate())
+    let date = new Date().toLocaleString()
+    console.log(date)
 
     API.postTransaction(this.state.user, this.state.transactionAmount, transactionType, this.state.cryptoValue, coinAmount, coinSymbol, date)
       .catch(err => console.log(err));;
@@ -199,7 +203,7 @@ export default class Transactions extends Component {
           <div>
             <p className="m-0">Purchased: {item.coinAmount} {item.coinSymbol}</p>
             <p className="m-0">Amount: ${item.transactionAmount}</p>
-            <p className="m-0">Timestamp: {item.date}</p>
+            <p className="m-0">Timestamp: {item.date.toLocaleString()}</p>
             <hr align="left" width="40%" />
           </div>
         );
@@ -234,21 +238,22 @@ export default class Transactions extends Component {
     // Builds the URL to display the coin icon on the page
     let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol.toLowerCase();
     let iconURL = "https://unpkg.com/@icon/cryptocurrency-icons/icons/" + coinSymbol + ".svg";
-    let coinName = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].name;
+    // let coinName = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].name;
     let coinPrice = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price;
 
     if (this.state.cryptos) {
       return (
-        <div>
+        <div
+          style={{ width: "200px" }}>
           <CoinMenu
             cryptos={this.state.cryptos}
             cryptoValue={this.state.cryptoValue}
             onCryptoChange={this.onCryptoChange}
           />
-          <div className="mt-3">
+          <div className="row mt-3">
             <div id="coinIcon"><img height="32" width="32" src={iconURL} /></div>
-            <div id="coinName">Name: {coinName}</div>
-            <div id="coinPrice">${coinPrice}</div>
+            <div className="ml-2 mt-1" id="coinName"><p>Coin value: </p></div>
+            <div className="ml-1 mt-1" id="coinPrice"><p>${coinPrice}</p></div>
           </div>
         </div>
       );
@@ -259,23 +264,26 @@ export default class Transactions extends Component {
   render() {
 
     return (
+      <div>
+        <div className="container text-center">
+          {/* <p>{JSON.stringify(this.state.cryptos)}</p> */}
+          <h4 className="text-center mt-4 font-weight-light">Cash: ${this.props.wallet.cash}</h4>
 
-      <div className="container">
-        {/* <p>{JSON.stringify(this.state.cryptos)}</p> */}
-        <h3 className="text-center mt-4 font-weight-light">Cash: ${this.props.wallet.cash}</h3>
 
+          <h3 className="mt-3 font-weight-light">Select the currency you'd like to buy:</h3>
 
-        <h3 className="mt-3">Select the currency you'd like to buy:</h3>
-        <div className="col-6">
-          <div className="form-group">
-            <label >Currencies:</label>
+          <label >Currencies:</label>
+          <div className="form-group"
+            style={{ display: "flex", justifyContent: "center" }}>
             {this.renderCoinMenu()}
           </div>
-        </div>
 
-        <div className="form-group">
-          <label className="col-2 col-form-label">Amount to trade:</label>
-          <div className="col-10">
+
+
+          <label className="col-form-label mt-2">Amount to trade:</label>
+          <div className="form-group"
+            style={{ display: "flex", justifyContent: "center" }}>
+            <label className="mt-2 mr-1">$ </label>
             <input
               className="form-control"
               id="transactionAmount"
@@ -283,38 +291,40 @@ export default class Transactions extends Component {
               label="Transaction amount"
               value={this.state.transactionAmount}
               onChange={this.onTransactionChange}
+              style={{ width: "200px" }}
             />
-            <p>This amounts to {(this.state.transactionAmount / (this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price)).toFixed(5)} {this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].name}</p>
           </div>
+
+          <p className="">This amounts to {(this.state.transactionAmount / (this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price)).toFixed(5)} {this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].name}</p>
+
+
+          <div id="transactionStatus">{this.state.transactionStatus}</div>
+
+          <button className="btn btn-primary mx-3" id="buyTransaction" onClick={this.buyTransaction} style={{ width: "70px" }}>Buy</button>
+          <button className="btn btn-danger mx-3" id="sellTransaction" onClick={this.sellTransaction} style={{ width: "70px" }}>Sell</button>
+
+          <hr width="80%"/>
         </div>
 
-        <br />
-        {/* Display whether transaction was successful (I think?) */}
-        <div id="transactionStatus">{this.state.transactionStatus}</div>
+        <div className="container  d-flex  justify-content-center">
+          <div className="row text-center">
+            <div className="col-6">
+              <h4>Recent Purchases</h4>
+              <ul style={ulStyle}>
+                {this.renderBuys()}
+              </ul>
+            </div>
 
-        <button className="btn btn-primary" id="buyTransaction" onClick={this.buyTransaction}>Buy</button>
-        <button className="btn btn-danger" id="sellTransaction" onClick={this.sellTransaction}>Sell</button>
-
-        <hr />
-
-        <div className="row">
-          <div className="col-6">
-            <h4>Recent Purchases</h4>
-            <ul style={ulStyle}>
-              {this.renderBuys()}
-            </ul>
+            <div className="col-6">
+              <h4>Recent Sells</h4>
+              <ul style={ulStyle}>
+                {this.renderSells()}
+              </ul>
+            </div>
           </div>
 
-          <div className="col-6">
-            <h4>Recent Sells</h4>
-            <ul style={ulStyle}>
-              {this.renderSells()}
-            </ul>
-          </div>
-        </div>
-
+        </div >
       </div>
-
 
     );
   };
