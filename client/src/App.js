@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Home from './components/Landing';
@@ -16,6 +16,8 @@ import { firebase } from './firebase';
 let newWallet = {
   cash: 10000
 };
+
+let redirect = ''
 
 let backgroundStyle = {
   backgroundColor: "#FEFBF7",
@@ -37,12 +39,18 @@ class App extends Component {
   componentDidMount() {
     firebase.auth.onAuthStateChanged(authUser => {
       authUser
-        ? this.setState(() => ({ authUser }))
-        : this.setState(() => ({ authUser: null }))
+        ? (
+          this.setState(() => ({ authUser })),
+          redirect = routes.WALLET
+        )
+        : (this.setState(() => ({ authUser: null })),
+          redirect = routes.HOME
+        )
         // console.log(this.state.authUser.email)
         ;
       // Signs the user into their game account upon logging into Firebase
       this.userLogin();
+      console.log(redirect)
     });
   };
 
@@ -115,9 +123,15 @@ class App extends Component {
   }
 
 
+  // {authUser
+  //   ? <HeaderAuth />
+  //   : <HeaderNonAuth />
+  // }
+
 
 
   render() {
+
     return (
       <Router>
         <div style={backgroundStyle}>
@@ -129,6 +143,13 @@ class App extends Component {
           <Route
             exact path={routes.HOME}
             component={() => <Home />}
+          />
+          <Route
+            exact path={"/"} render={() =>
+              this.state.authUser
+                ? <Redirect to={routes.WALLET} />
+                : <Redirect to={routes.HOME} />
+            }
           />
           <Route
             exact path={routes.SIGN_UP}

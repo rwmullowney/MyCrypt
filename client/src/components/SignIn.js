@@ -7,9 +7,9 @@ import * as routes from '../constants/routes';
 
 const SignInPage = ({ history }) =>
   <div>
-    <h1>Sign In</h1>
+    {/* <h1>Sign In</h1> */}
     <SignInForm history={history} />
-    <SignUpLink />
+    {/* <SignUpLink /> */}
   </div>
 
 const byPropKey = (propertyName, value) => () => ({
@@ -71,16 +71,17 @@ class SignInForm extends Component {
           placeholder="Email Address"
         />
         <input
+          className="ml-1"
           value={password}
           onChange={event => this.setState(byPropKey('password', event.target.value))}
           type="password"
           placeholder="Password"
         />
-        <button disabled={isInvalid} type="submit">
+        <button className="btn btn-outline-primary ml-1" style={{ border: 0, padding: 0 }} disabled={isInvalid} type="submit">
           Sign In
         </button>
 
-        { error && <p>{error.message}</p> }
+        {error && <p>{error.message}</p>}
       </form>
     );
   }

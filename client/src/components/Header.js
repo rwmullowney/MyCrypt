@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import SignOutButton from './SignOut';
+import SignInForm from './SignIn';
 import * as routes from '../constants/routes';
 
 
@@ -58,7 +59,6 @@ const Header = ({ authUser }) =>
 const HeaderAuth = () =>
   <ul style={removeListBullet}>
     <div className="row">
-      <li className="mx-3"><Link to={routes.HOME}>Home</Link></li>
       <li className="mx-3"><Link to={routes.TRANSACTIONS}>Transactions</Link></li>
       <li className="mx-3"><Link to={routes.WALLET}>Wallet</Link></li>
       <li className="mx-3"><SignOutButton /></li>
@@ -68,7 +68,10 @@ const HeaderAuth = () =>
 const HeaderNonAuth = () =>
   <ul style={removeListBullet}>
     <div className="row">
-      <li className="mx-3"><Link to={routes.SIGN_IN}>Sign In</Link></li>
+      {/* <li className="mx-3"><Link to={routes.SIGN_IN}>Sign In</Link></li> */}
+      <li className="mx-3"><SignInForm 
+      // history={history}
+       /></li>
     </div>
   </ul>
 
