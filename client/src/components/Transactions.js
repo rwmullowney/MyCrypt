@@ -204,7 +204,7 @@ export default class Transactions extends Component {
             <p className="m-0">Purchased: {item.coinAmount} {item.coinSymbol}</p>
             <p className="m-0">Amount: ${item.transactionAmount}</p>
             <p className="m-0">Timestamp: {item.date.toLocaleString()}</p>
-            <hr align="left" width="40%" />
+            <hr align="center" width="40%" />
           </div>
         );
       };
@@ -221,7 +221,7 @@ export default class Transactions extends Component {
             <p className="m-0">Sold: {item.coinAmount} {item.coinSymbol}</p>
             <p className="m-0">Amount: ${item.transactionAmount}</p>
             <p className="m-0">Timestamp: {item.date}</p>
-            <hr align="left" width="40%" />
+            <hr align="center" width="40%" />
           </div>
         );
       };
@@ -272,7 +272,7 @@ export default class Transactions extends Component {
 
           <h3 className="mt-3 font-weight-light">Select the currency you'd like to buy:</h3>
 
-          <label >Currencies:</label>
+          {/* <h5 className="mt-3 mb-0 font-weight-light"><label >Currencies:</label></h5> */}
           <div className="form-group"
             style={{ display: "flex", justifyContent: "center" }}>
             {this.renderCoinMenu()}
@@ -280,7 +280,7 @@ export default class Transactions extends Component {
 
 
 
-          <label className="col-form-label mt-2">Amount to trade:</label>
+          <h5 className="mb-0 font-weight-light"><label className="col-form-label mt-2">Amount to trade:</label></h5>
           <div className="form-group"
             style={{ display: "flex", justifyContent: "center" }}>
             <label className="mt-2 mr-1">$ </label>
@@ -303,19 +303,19 @@ export default class Transactions extends Component {
           <button className="btn btn-primary mx-3" id="buyTransaction" onClick={this.buyTransaction} style={{ width: "70px" }}>Buy</button>
           <button className="btn btn-danger mx-3" id="sellTransaction" onClick={this.sellTransaction} style={{ width: "70px" }}>Sell</button>
 
-          <hr width="80%"/>
+          <hr width="70%"/>
         </div>
 
         <div className="container  d-flex  justify-content-center">
           <div className="row text-center">
-            <div className="col-6">
+            <div className="col-5">
               <h4>Recent Purchases</h4>
               <ul style={ulStyle}>
                 {this.renderBuys()}
               </ul>
             </div>
-
-            <div className="col-6">
+            <div className="col-2"></div>
+            <div className="col-5">
               <h4>Recent Sells</h4>
               <ul style={ulStyle}>
                 {this.renderSells()}
