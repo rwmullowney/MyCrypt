@@ -201,9 +201,11 @@ export default class Transactions extends Component {
 
         return (
           <div>
-            <p className="m-0">Purchased: {item.coinAmount} {item.coinSymbol}</p>
-            <p className="m-0">Amount: ${item.transactionAmount}</p>
-            <p className="m-0">Timestamp: {item.date.toLocaleString()}</p>
+            <div className="text-left" style={{ width: "200px"}}>
+              <p className="m-0">Bought: {item.coinAmount} {item.coinSymbol}</p>
+              <p className="m-0">Amount: ${item.transactionAmount.toFixed(2)}</p>
+              <p className="m-0">{item.date.toLocaleString()}</p>
+            </div>
             <hr align="center" width="40%" />
           </div>
         );
@@ -218,9 +220,11 @@ export default class Transactions extends Component {
 
         return (
           <div>
-            <p className="m-0">Sold: {item.coinAmount} {item.coinSymbol}</p>
-            <p className="m-0">Amount: ${item.transactionAmount}</p>
-            <p className="m-0">Timestamp: {item.date}</p>
+            <div className="text-right" style={{ width: "200px"}}>
+              <p className="m-0">Sold: {item.coinAmount} {item.coinSymbol}</p>
+              <p className="m-0">Amount: ${item.transactionAmount.toFixed(2)}</p>
+              <p className="m-0">{item.date}</p>
+            </div>
             <hr align="center" width="40%" />
           </div>
         );
@@ -255,7 +259,7 @@ export default class Transactions extends Component {
               onCryptoChange={this.onCryptoChange}
             />
           </div>
-          <div className="ml-2 mt-2" id="coinName"><p>Coin value: </p></div>
+          <div className="ml-3 mt-2" id="coinName"><p>Coin value: </p></div>
           <div className="ml-1 mt-2" id="coinPrice"><p>${coinPrice}</p></div>
         </div>
 
@@ -273,7 +277,7 @@ export default class Transactions extends Component {
           <h4 className="text-center mt-4 font-weight-light">Cash: ${this.props.wallet.cash}</h4>
 
 
-          <h3 className="mt-3 font-weight-light">Select the currency you'd like to buy:</h3>
+          <h3 className="mt-3 font-weight-light">Select the currency you'd like to trade:</h3>
 
           {/* <h5 className="mt-3 mb-0 font-weight-light"><label >Currencies:</label></h5> */}
           <div className="form-group"
@@ -283,19 +287,20 @@ export default class Transactions extends Component {
 
 
           <div style={{
-            marginLeft: "30px",
-            marginTop: "-22px"
+            marginLeft: "23px",
           }}>
-            <h5 className="mb-0 mt-4 font-weight-light" style={{ marginBottom: "-15px" }}>
+            <h5 className="mb-0 mt-3 font-weight-light" style={{ marginBottom: "-15px" }}>
               <label className="col-form-label">Amount to trade:</label>
             </h5>
             <div className="container d-flex justify-content-center" style={{ marginTop: "-6px" }}>
               <div className="row">
                 <div className="form-group"
                   style={{ display: "flex", justifyContent: "center" }}>
-                  <label className="mt-2 mr-1">$ </label>
+                  <label className="mt-2 mr-1" 
+                  // style={{position: "absolute", paddingRight: "170px", paddingTop: "2px"}}
+                  >$ </label>
                   <input
-                    className="form-control"
+                    className="form-control shadow-sm border-0"
                     id="transactionAmount"
                     type="number"
                     label="Transaction amount"
@@ -304,8 +309,8 @@ export default class Transactions extends Component {
                     style={{ width: "200px" }}
                   />
                 </div>
-                <button className="btn btn-primary ml-3 mr-2" id="buyTransaction" onClick={this.buyTransaction} style={{ height: "40px", width: "70px" }}>Buy</button>
-                <button className="btn btn-danger" id="sellTransaction" onClick={this.sellTransaction} style={{ height: "40px", width: "70px" }}>Sell</button>
+                <button className="btn btn-primary ml-3 mr-2 shadow-sm" id="buyTransaction" onClick={this.buyTransaction} style={{ height: "40px", width: "70px" }}>Buy</button>
+                <button className="btn btn-danger shadow-sm" id="sellTransaction" onClick={this.sellTransaction} style={{ height: "40px", width: "70px" }}>Sell</button>
               </div>
             </div>
           </div>
@@ -318,20 +323,20 @@ export default class Transactions extends Component {
 
 
 
-          <hr width="70%" />
+          <hr style={{ marginTop: "40px" }} width="70%" />
         </div>
 
-        <div className="container  d-flex  justify-content-center">
-          <div className="row text-center">
+        <div className="container  d-flex  justify-content-center mt-4">
+          <div className="row">
             <div className="col-5">
-              <h4>Recent Purchases</h4>
+              <h4 style={{ width: "200px" }} className="text-left">Recent Buys</h4>
               <ul style={ulStyle}>
                 {this.renderBuys()}
               </ul>
             </div>
             <div className="col-2"></div>
             <div className="col-5">
-              <h4>Recent Sells</h4>
+              <h4 style={{ width: "200px" }} className="text-right">Recent Sells</h4>
               <ul style={ulStyle}>
                 {this.renderSells()}
               </ul>

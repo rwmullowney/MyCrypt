@@ -9,7 +9,7 @@ class CoinMenu extends Component {
         <select
           value={this.props.cryptoValue}
           onChange={this.props.onCryptoChange}
-          className="form-control" id="coinDropdown"
+          className="form-control shadow-sm border-0" id="coinDropdown"
           >
           <option value="1">Bitcoin</option>
           <option value="2">Litecoin</option>
