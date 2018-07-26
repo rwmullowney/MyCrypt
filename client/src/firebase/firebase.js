@@ -2,12 +2,12 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 
 var config = {
-    apiKey: "AIzaSyDM3n780fZAlxO8vXqOFiEJ_jNgjaRdcqY",
-    authDomain: "mycrypto-6dbc2.firebaseapp.com",
-    databaseURL: "https://mycrypto-6dbc2.firebaseio.com",
-    projectId: "mycrypto-6dbc2",
-    storageBucket: "mycrypto-6dbc2.appspot.com",
-    messagingSenderId: "467688812777"
+    apiKey: "AIzaSyA_2QmLndchTNxTCXdqyGwdDeOEiN8IOz8",
+    authDomain: "mycrypt-3bbc5.firebaseapp.com",
+    databaseURL: "https://mycrypt-3bbc5.firebaseio.com",
+    projectId: "mycrypt-3bbc5",
+    storageBucket: "mycrypt-3bbc5.appspot.com",
+    messagingSenderId: "857408700970"
 }
 
 if (!firebase.apps.length) {

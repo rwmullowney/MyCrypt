@@ -38,6 +38,7 @@ var headerColor = {
 
 
 const Header = ({ authUser }) =>
+<<<<<<< HEAD
 <div className="shadow-sm" style={headerColor}>
   <div className="container" >
     <div style={headerStyle}>
@@ -52,6 +53,17 @@ const Header = ({ authUser }) =>
           }
         </div>
       </div>
+=======
+  <div className="container justify-content-center mt-3 header">
+    <h1 className="text-center" style={textStyle}>My Crypto</h1>
+
+    <hr />
+    <div>
+      {authUser
+        ? <HeaderAuth />
+        : <HeaderNonAuth />
+      }
+>>>>>>> refs/remotes/origin/master
     </div>
     {/* <hr className="mt-0" /> */}
   </div>
