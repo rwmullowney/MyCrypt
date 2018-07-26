@@ -2,7 +2,7 @@ import React from 'react';
 import { auth } from '../firebase';
 
 let buttonStyle = {
-  // color: "#D30225",
+  color: "#EAEBEE",
   border: 0,
   padding: 0,
 

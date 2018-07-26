@@ -20,7 +20,7 @@ let newWallet = {
 let redirect = ''
 
 let backgroundStyle = {
-  backgroundColor: "#FEFBF7",
+  backgroundColor: "#EEF2F7",
   position: "absolute", top: 0, bottom: 0, left: 0, right: 0
 };
 

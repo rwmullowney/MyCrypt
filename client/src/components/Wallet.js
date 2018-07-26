@@ -133,7 +133,7 @@ export default class Wallet extends Component {
 
       return (
         <div>
-          <div className="card m-2 shadow-sm border-0" style={cardStyle}>
+          <div className="card m-2 shadow-sm" style={cardStyle}>
             <div className="card-body" id="${item}">
               <h4 className="font-weight-light">{this.state.cryptos[item].symbol} - ${this.state.cryptos[item].quotes.USD.price.toFixed(2)} </h4>
               <h5 className="font-weight-light">Owned: {this.state.wallet[this.state.cryptos[item].symbol]}</h5>

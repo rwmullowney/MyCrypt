@@ -201,7 +201,7 @@ export default class Transactions extends Component {
 
         return (
           <div>
-            <div className="text-left" style={{ width: "200px"}}>
+            <div className="text-left" style={{ width: "200px" }}>
               <p className="m-0">Bought: {item.coinAmount} {item.coinSymbol}</p>
               <p className="m-0">Amount: ${item.transactionAmount.toFixed(2)}</p>
               <p className="m-0">{item.date.toLocaleString()}</p>
@@ -220,7 +220,7 @@ export default class Transactions extends Component {
 
         return (
           <div>
-            <div className="text-right" style={{ width: "200px"}}>
+            <div className="text-right" style={{ width: "200px" }}>
               <p className="m-0">Sold: {item.coinAmount} {item.coinSymbol}</p>
               <p className="m-0">Amount: ${item.transactionAmount.toFixed(2)}</p>
               <p className="m-0">{item.date}</p>
@@ -272,7 +272,7 @@ export default class Transactions extends Component {
 
     return (
       <div>
-        <div className="container text-center">
+        <div className="container text-center shadow-sm rounded border-0 py-2 mt-3" style={{ backgroundColor: "#FBFEFF", width: "40%" }}>
           {/* <p>{JSON.stringify(this.state.cryptos)}</p> */}
           <h4 className="text-center mt-4 font-weight-light">Cash: ${this.props.wallet.cash}</h4>
 
@@ -287,7 +287,7 @@ export default class Transactions extends Component {
 
 
           <div style={{
-            marginLeft: "23px",
+            marginLeft: "22px",
           }}>
             <h5 className="mb-0 mt-3 font-weight-light" style={{ marginBottom: "-15px" }}>
               <label className="col-form-label">Amount to trade:</label>
@@ -296,11 +296,11 @@ export default class Transactions extends Component {
               <div className="row">
                 <div className="form-group"
                   style={{ display: "flex", justifyContent: "center" }}>
-                  <label className="mt-2 mr-1" 
+                  <label className="mt-2 mr-1"
                   // style={{position: "absolute", paddingRight: "170px", paddingTop: "2px"}}
                   >$ </label>
                   <input
-                    className="form-control shadow-sm border-0"
+                    className="form-control shadow-sm"
                     id="transactionAmount"
                     type="number"
                     label="Transaction amount"
@@ -323,10 +323,10 @@ export default class Transactions extends Component {
 
 
 
-          <hr style={{ marginTop: "40px" }} width="70%" />
-        </div>
 
-        <div className="container  d-flex  justify-content-center mt-4">
+        </div>
+        <hr style={{ marginTop: "40px" }} width="70%" />
+        <div className="container  d-flex  justify-content-center mt-4 shadow-sm rounded border-0 py-2" style={{ backgroundColor: "#FBFEFF", width: "40%" }}>
           <div className="row">
             <div className="col-5">
               <h4 style={{ width: "200px" }} className="text-left">Recent Buys</h4>

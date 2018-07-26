@@ -16,6 +16,7 @@ var textStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
+  color: "#FEFBF7"
 };
 
 // CSS to remove the bullet of the <ul> tags
@@ -31,12 +32,13 @@ var headerStyle = {
 }
 
 var headerColor = {
-  backgroundColor: "#FDF8F0"
+  backgroundColor: "#434141",
+  // backgroundColor: "#FBF2E2"
 };
 
 
 const Header = ({ authUser }) =>
-<div style={headerColor}>
+<div className="shadow-sm" style={headerColor}>
   <div className="container" >
     <div style={headerStyle}>
       <div className="mt-1">
@@ -51,7 +53,7 @@ const Header = ({ authUser }) =>
         </div>
       </div>
     </div>
-    <hr className="mt-0" />
+    {/* <hr className="mt-0" /> */}
   </div>
 </div>
 
@@ -59,8 +61,8 @@ const Header = ({ authUser }) =>
 const HeaderAuth = () =>
   <ul style={removeListBullet}>
     <div className="row">
-      <li className="mx-3"><Link to={routes.TRANSACTIONS}>Transactions</Link></li>
-      <li className="mx-3"><Link to={routes.WALLET}>Wallet</Link></li>
+      <li className="mx-3"><Link style={{color: "#EAEBEE"}} to={routes.TRANSACTIONS}>Transactions</Link></li>
+      <li className="mx-3"><Link style={{color: "#EAEBEE"}} to={routes.WALLET}>Wallet</Link></li>
       <li className="mx-3"><SignOutButton /></li>
     </div>
   </ul>
