@@ -325,7 +325,7 @@ export default class Transactions extends Component {
 
 
         </div>
-        <hr style={{ marginTop: "40px" }} width="70%" />
+        <hr style={{ marginTop: "40px", marginBottom: "40px" }} width="70%" />
         <div className="container  d-flex  justify-content-center mt-4 shadow-sm rounded border-0 py-2" style={{ backgroundColor: "#FBFEFF", width: "40%" }}>
           <div className="row">
             <div className="col-5">
