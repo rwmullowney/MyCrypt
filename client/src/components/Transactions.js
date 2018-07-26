@@ -8,9 +8,9 @@ var ulStyle = {
   paddingLeft: 0
 };
 
-var moneyStyle = {
-  display: "table"
-};
+var formStyle = {
+  marginLeft: "-100px"
+}
 
 
 export default class Transactions extends Component {
@@ -243,19 +243,22 @@ export default class Transactions extends Component {
 
     if (this.state.cryptos) {
       return (
-        <div
-          style={{ width: "200px" }}>
-          <CoinMenu
-            cryptos={this.state.cryptos}
-            cryptoValue={this.state.cryptoValue}
-            onCryptoChange={this.onCryptoChange}
-          />
-          <div className="row mt-3">
-            <div id="coinIcon"><img height="32" width="32" src={iconURL} /></div>
-            <div className="ml-2 mt-1" id="coinName"><p>Coin value: </p></div>
-            <div className="ml-1 mt-1" id="coinPrice"><p>${coinPrice}</p></div>
+
+        <div className="row">
+          <div className="mr-1 mt-1" id="coinIcon"><img height="32" width="32" src={iconURL} /></div>
+          <div
+            style={{ width: "200px" }}>
+
+            <CoinMenu
+              cryptos={this.state.cryptos}
+              cryptoValue={this.state.cryptoValue}
+              onCryptoChange={this.onCryptoChange}
+            />
           </div>
+          <div className="ml-2 mt-2" id="coinName"><p>Coin value: </p></div>
+          <div className="ml-1 mt-2" id="coinPrice"><p>${coinPrice}</p></div>
         </div>
+
       );
     };
   };
@@ -279,31 +282,43 @@ export default class Transactions extends Component {
           </div>
 
 
-
-          <h5 className="mb-0 font-weight-light"><label className="col-form-label mt-2">Amount to trade:</label></h5>
-          <div className="form-group"
-            style={{ display: "flex", justifyContent: "center" }}>
-            <label className="mt-2 mr-1">$ </label>
-            <input
-              className="form-control"
-              id="transactionAmount"
-              type="number"
-              label="Transaction amount"
-              value={this.state.transactionAmount}
-              onChange={this.onTransactionChange}
-              style={{ width: "200px" }}
-            />
+          <div style={{
+            marginLeft: "30px",
+            marginTop: "-22px"
+          }}>
+            <h5 className="mb-0 mt-4 font-weight-light" style={{ marginBottom: "-15px" }}>
+              <label className="col-form-label">Amount to trade:</label>
+            </h5>
+            <div className="container d-flex justify-content-center" style={{ marginTop: "-6px" }}>
+              <div className="row">
+                <div className="form-group"
+                  style={{ display: "flex", justifyContent: "center" }}>
+                  <label className="mt-2 mr-1">$ </label>
+                  <input
+                    className="form-control"
+                    id="transactionAmount"
+                    type="number"
+                    label="Transaction amount"
+                    value={this.state.transactionAmount}
+                    onChange={this.onTransactionChange}
+                    style={{ width: "200px" }}
+                  />
+                </div>
+                <button className="btn btn-primary ml-3 mr-2" id="buyTransaction" onClick={this.buyTransaction} style={{ height: "40px", width: "70px" }}>Buy</button>
+                <button className="btn btn-danger" id="sellTransaction" onClick={this.sellTransaction} style={{ height: "40px", width: "70px" }}>Sell</button>
+              </div>
+            </div>
           </div>
 
-          <p className="">This amounts to {(this.state.transactionAmount / (this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price)).toFixed(5)} {this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].name}</p>
-
+          <div style={{ marginTop: "-8px" }}>
+            <p className="mt-0">This amounts to {(this.state.transactionAmount / (this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price)).toFixed(5)} {this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].name}</p>
+          </div>
 
           <div id="transactionStatus">{this.state.transactionStatus}</div>
 
-          <button className="btn btn-primary mx-3" id="buyTransaction" onClick={this.buyTransaction} style={{ width: "70px" }}>Buy</button>
-          <button className="btn btn-danger mx-3" id="sellTransaction" onClick={this.sellTransaction} style={{ width: "70px" }}>Sell</button>
 
-          <hr width="70%"/>
+
+          <hr width="70%" />
         </div>
 
         <div className="container  d-flex  justify-content-center">
