@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import CoinMenu from "./coinmenu";
-import API from "../utils/API";
+import CoinMenu from "./CoinMenu";
+import API from "../utils/API"
 
 // Removes indentation for unordered list items
 var ulStyle = {
@@ -11,7 +11,6 @@ var ulStyle = {
 var formStyle = {
   marginLeft: "-100px"
 }
-
 
 export default class Transactions extends Component {
 
@@ -243,7 +242,7 @@ export default class Transactions extends Component {
     let coinSymbol = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].symbol.toLowerCase();
     let iconURL = "https://unpkg.com/@icon/cryptocurrency-icons/icons/" + coinSymbol + ".svg";
     // let coinName = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].name;
-    let coinPrice = this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price;
+    let coinPrice = Number(this.state.cryptos && this.state.cryptos[this.state.cryptoValue] && this.state.cryptos[this.state.cryptoValue].quotes.USD.price).toFixed(2);
 
     if (this.state.cryptos) {
       return (
@@ -327,7 +326,7 @@ export default class Transactions extends Component {
         </div>
         <hr style={{ marginTop: "40px", marginBottom: "40px" }} width="70%" />
         <div className="container  d-flex  justify-content-center mt-4 shadow-sm rounded border-0 py-2" style={{ backgroundColor: "#FBFEFF", width: "40%" }}>
-          <div className="row">
+          <div className="row mt-2">
             <div className="col-5">
               <h4 style={{ width: "200px" }} className="text-left">Recent Buys</h4>
               <ul style={ulStyle}>
