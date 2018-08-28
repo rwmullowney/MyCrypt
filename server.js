@@ -16,9 +16,9 @@ if (process.env.NODE_ENV === "production") {
 app.use(routes);
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/cryptotransactions");
+mongoose.connect(process.env.MONGODB_URI);
 
 // Start the API server
-app.listen(PORT, function() {
+app.listen(rocess.env.PORT || 3001, function() {
   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
